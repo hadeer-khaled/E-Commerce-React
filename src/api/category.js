@@ -14,3 +14,10 @@ export const createCategory = (newCategory)=>{
         }
     });
 }
+export const UpdateCategoryById = (category_id, updatedCategory)=>{
+    return axios_instance.post(`categories/${category_id}`, {...updatedCategory , _method: 'PATCH'} , {
+        headers:{
+            "Content-Type": "multipart/form-data",
+        }
+    });
+}

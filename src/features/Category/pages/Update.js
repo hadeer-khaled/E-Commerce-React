@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react";
 
 import createCategorySchema from "features/Category/schemas/CreateCategorySchema"
-import {UpdateCategoryById} from "api/category"
+import {updateCategoryById} from "api/category"
 import {getCategoryById} from "api/category"
 
 import { Formik, useFormik } from "formik"
@@ -17,7 +17,7 @@ const Update  = () => {
     },
     validationSchema:createCategorySchema,
     onSubmit:(values)=>{
-      UpdateCategoryById(id, values).then(response=>{
+      updateCategoryById(id, values).then(response=>{
         console.log(response.data)
       })
     }

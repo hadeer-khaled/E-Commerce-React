@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
 import { getCategoryById } from "api/category"
+import { deleteCategoryById } from "api/category"
 
 const Show  = () => {
+  const navigator = useNavigate()
   const {id} = useParams();
 
   const [category , setCategory] = useState(null)
@@ -16,12 +18,21 @@ const Show  = () => {
     .catch(error => {
         console.error('Error fetching categories:', error);
     });
-  } , [])
+  } , [id])
+
+  const deleteHandler = (category_id)=>{
+    deleteCategoryById(category_id)
+    .then(res=>{
+      console.log(res.data.message)
+      navigator("/categories")
+    })
+  }
 
     return (
       <>
       <div>Show Cat {id}</div>
       {category ? <p>{category.title}</p> : "Not Found"}
+      <button onClick={()=>{deleteHandler(category.id)}}>Delete</button>
       </>
     )
   }

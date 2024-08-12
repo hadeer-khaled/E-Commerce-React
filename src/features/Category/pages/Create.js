@@ -16,7 +16,9 @@ const Create  = () => {
     onSubmit:(values , actions)=>{
       const formData = new FormData();
       formData.append('title', values.title);
-      formData.append('image', values.image);
+      if (values.image) {
+        formData.append('image', values.image);
+      }
       createCategory(formData)
       .then(response=>{
         toast.success(response.data.message ,{ autoClose: 2000 });

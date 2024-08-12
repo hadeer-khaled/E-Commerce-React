@@ -1,9 +1,5 @@
 import React from 'react'
-import { Formik, useFormik } from "formik"
-import createCategorySchema from "features/Category/schemas/CreateCategorySchema"
-import { toast ,ToastContainer } from "react-toastify";
-
-export default function Create({formik}) {
+export default function Create({formik,handleImageChange }) {
 
   return (
    <>
@@ -21,18 +17,18 @@ export default function Create({formik}) {
                 className="grow"
                 />
             </label>
-            {formik.errors.title && formik.touched.title ? <p>{formik.errors.title}</p> : ""}
+            {formik.errors.title && formik.touched.title ? <p className="text-red-500">{formik.errors.title}</p> : ""}
 
             <input
             type="file"
             name="image"
             onChange={handleImageChange}
-            className="file-input file-input-bordered file-input-md w-full max-w-xs"  
+            className="file-input file-input-bordered file-input-md w-full max-w-xs "  
         />
 
-            <button type="submit" disabled = {Formik.isSubmitting || !formik.isValid}
+        <button type="submit" disabled = {formik.isSubmitting || !formik.isValid}
 
-            className="btn btn-outline btn-info">Add Category</button>
+            className="btn btn-outline btn-info mt-4">Add Category</button>
     </form>
    </>
   )

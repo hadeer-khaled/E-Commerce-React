@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { getCategoryById } from "api/category"
 import { deleteCategoryById } from "api/category"
 
+import ProductCard from "features/Product/components/Card"
 const Show  = () => {
   const navigator = useNavigate()
   const {id} = useParams();
@@ -30,9 +31,18 @@ const Show  = () => {
 
     return (
       <>
-      <div>Show Cat {id}</div>
-      {category ? <p>{category.title}</p> : "Not Found"}
-      <button onClick={()=>{deleteHandler(category.id)}}>Delete</button>
+      {category ? 
+      <>
+        <p>{category.title}</p> 
+        <button  className="btn btn-outline btn-error" onClick={()=>{deleteHandler(category.id)}}>Delete</button>
+        <div className="container mx-auto px-4 grid grid-cols-4 gap-4">
+        {category.products?.map(product =>{
+          return(<ProductCard product = {product} key={`product_${product.id}`}></ProductCard>)
+          })
+        }
+        </div>
+        </>
+       : "Not Found"}
       </>
     )
   }

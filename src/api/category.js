@@ -15,12 +15,17 @@ export const createCategory = (newCategory)=>{
     });
 }
 export const updateCategoryById = (category_id, updatedCategory)=>{
-    return axios_instance.post(`categories/${category_id}`, {...updatedCategory , _method: 'PATCH'} , {
+    return axios_instance.post(`categories/${category_id}`, {...updatedCategory , _method: 'PATCH'});
+}
+
+export const deleteCategoryById = (category_id)=>{
+    return axios_instance.delete(`categories/${category_id}`);
+}
+
+export const uploadCategoryImage = (category_id , imageFormData)=>{
+    return axios_instance.post(`categories/${category_id}/upload-image`, imageFormData , {
         headers:{
             "Content-Type": "multipart/form-data",
         }
     });
-}
-export const deleteCategoryById = (category_id)=>{
-    return axios_instance.delete(`categories/${category_id}`);
 }

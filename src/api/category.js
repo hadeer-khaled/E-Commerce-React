@@ -1,7 +1,9 @@
 import axios_instance from "./config";
 
-export const getCategoies = ()=>{
-    return axios_instance.get('categories');
+export const getCategoies = (params ={})=>{
+    return axios_instance.get(`categories`,{
+        params: params
+    });
 }
 export const getCategoryById = (category_id)=>{
     return axios_instance.get(`categories/${category_id}`);

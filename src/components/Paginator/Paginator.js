@@ -23,7 +23,7 @@ export default function Pagination({pagination,handlePageChange , perPage ,handl
                 onChange={handlePerPage}
           >
           <option value={4}>4</option>
-          <option value={8} selected>8</option>
+          <option value={8}>8</option>
           <option value={16}>16</option>
         </select>
 

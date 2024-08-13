@@ -5,7 +5,7 @@ export default function Filter({filter, handleFilterInput , handleFilter}) {
     <>
         <div className=" mb-6 flex items-center gap-2" >
               <label className="input input-bordered flex items-center gap-2">
-                <input type="text" className="grow" placeholder="Search" value={filter} onChange={handleFilterInput} />
+                <input type="text" className="grow" placeholder="Search"  onChange={handleFilterInput} />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 16 16"

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getCategoies } from "api/category"
 import Paginator from "components/Paginator/Paginator"
 import CategoryCard from 'features/Category/components/Card'
-
+import Filter from "components/Filter/Filter";
 const List  = () => {
   const [categoriesList , setCategoriesList] = useState([])
   const [pagination, setPagination] = useState({});
@@ -38,30 +38,18 @@ const List  = () => {
     setFilter(e.target.value)
   }
 
-  const handleFilter = ()=>{
-    fetchCategories(currentPage , perPage, filter)
+  const handleFilter = (ToClear = false)=>{
+    ToClear ?
+    fetchCategories(currentPage , perPage) 
+    :
+    fetchCategories(currentPage , perPage, filter.toLowerCase())
   }
   
 
     return (
       <>
       <div className="container mx-auto" >
-          <div className=" mb-6 flex items-center gap-2" >
-              <label className="input input-bordered flex items-center gap-2">
-                <input type="text" className="grow" placeholder="Search" value={filter} onChange={handleFilterInput} />
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 16 16"
-                  fill="currentColor"
-                  className="h-4 w-4 opacity-70">
-                  <path
-                    fillRule="evenodd"
-                    d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-                    clipRule="evenodd" />
-                </svg>
-              </label>
-              <button className="btn btn-outline btn-info" onClick={handleFilter}>Filter</button>
-          </div>
+          <Filter filter={filter} handleFilterInput ={handleFilterInput} handleFilter = {handleFilter}></Filter>
           
           <div className="px-4 grid grid-cols-4 gap-4">
             {categoriesList.length !== 0 ? 

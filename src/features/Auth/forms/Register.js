@@ -1,4 +1,4 @@
-export default function Register({formik}) {
+export default function Register({ formik }) {
   return (
     <>
       <form onSubmit={formik.handleSubmit}>
@@ -16,13 +16,17 @@ export default function Register({formik}) {
             className="grow"
             name="name"
             placeholder="Username"
-            value={formik.values.title}
+            value={formik.values.name}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
         </label>
-        
-        {formik.errors.name && formik.touched.name ? <p className="text-red-500">{formik.errors.name}</p> : ""}
+
+        {formik.errors.name && formik.touched.name ? (
+          <p className="text-red-500">{formik.errors.name}</p>
+        ) : (
+          ""
+        )}
 
         <label className="input input-bordered flex items-center gap-2">
           <svg
@@ -39,12 +43,16 @@ export default function Register({formik}) {
             className="grow"
             name="email"
             placeholder="Email"
-            value={formik.values.title}
+            value={formik.values.email}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
         </label>
-        {formik.errors.email && formik.touched.email ? <p className="text-red-500">{formik.errors.email}</p> : ""}
+        {formik.errors.email && formik.touched.email ? (
+          <p className="text-red-500">{formik.errors.email}</p>
+        ) : (
+          ""
+        )}
 
         <label className="input input-bordered flex items-center gap-2">
           <svg
@@ -64,13 +72,16 @@ export default function Register({formik}) {
             className="grow"
             name="password"
             placeholder="*******"
-            value={formik.values.title}
+            value={formik.values.password}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
         </label>
-        {formik.errors.password && formik.touched.password ? <p className="text-red-500">{formik.errors.password}</p> : ""}
-
+        {formik.errors.password && formik.touched.password ? (
+          <p className="text-red-500">{formik.errors.password}</p>
+        ) : (
+          ""
+        )}
 
         <label className="input input-bordered flex items-center gap-2">
           <svg
@@ -90,19 +101,25 @@ export default function Register({formik}) {
             className="grow"
             name="password_confirmation"
             placeholder="*******"
-            value={formik.values.title}
+            value={formik.values.password_confirmation}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
         </label>
-        {formik.errors.password_confirmation && formik.touched.password_confirmation ? <p className="text-red-500">{formik.errors.password_confirmation}</p> : ""}
+        {formik.errors.password_confirmation &&
+        formik.touched.password_confirmation ? (
+          <p className="text-red-500">{formik.errors.password_confirmation}</p>
+        ) : (
+          ""
+        )}
 
-        <button type="submit" 
-                  disabled = {formik.isSubmitting || !formik.isValid}
-                  className="btn btn-outline btn-info btn-wide mt-4">
-                  Register
+        <button
+          type="submit"
+          disabled={formik.isSubmitting || !formik.isValid}
+          className="btn btn-outline btn-info btn-wide mt-4"
+        >
+          Register
         </button>
-
       </form>
     </>
   );

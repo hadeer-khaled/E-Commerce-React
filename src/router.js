@@ -6,10 +6,11 @@ import CreateCategory from "features/Category/pages/Create"
 import ShowCategory from "features/Category/pages/Show"
 import UpdateCategory from "features/Category/pages/Update"
 import ListCategory from "features/Category/pages/List"
+import Register from "features/Auth/pages/Register";
+import Login from "features/Auth/pages/Login";
 
 /* Layouts */
 import UserLayout from 'layouts/UserLayout'
-import Register from "features/Auth/pages/Register";
 
 const router = createBrowserRouter([
     {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
             {
                 path:'register',
                 element:<Register></Register>
+            },
+            {
+                path:'login',
+                element:<Login></Login>
             },
             {
                 path:"categories",

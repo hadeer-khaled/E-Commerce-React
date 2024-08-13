@@ -9,6 +9,7 @@ import ListCategory from "features/Category/pages/List"
 
 /* Layouts */
 import UserLayout from 'layouts/UserLayout'
+import Register from "features/Auth/pages/Register";
 
 const router = createBrowserRouter([
     {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
             {
                 index:true,
                 element:<h1> Home </h1>
+            },
+            {
+                path:'register',
+                element:<Register></Register>
             },
             {
                 path:"categories",

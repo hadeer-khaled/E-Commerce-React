@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import {decode} from 'html-entities';
 
 import { getCategoies } from "api/category"
-
+import Paginator from "components/Paginator/Paginator"
 import CategoryCard from 'features/Category/components/Card'
 
 const List  = () => {
@@ -50,28 +50,7 @@ const List  = () => {
       </div>
 
       <div className="my-10">
-        <div className="join">
-        {pagination.links && pagination.links.map((link, index) => (
-          <button
-            className="join-item btn btn-md"
-            key={index}
-            disabled={!link.url || link.active}
-            onClick={() => handlePageChange(link.url)}
-          >
-            {decode(link.label)}
-          </button>
-        ))}
-        
-        <select className="select select-bordered w-full max-w-xs"
-                value={perPage} 
-                onChange={handlePerPage}
-          >
-          <option value={4}>4</option>
-          <option value={8} selected>8</option>
-          <option value={16}>16</option>
-        </select>
-
-        </div>
+       <Paginator pagination ={pagination} handlePageChange = {handlePageChange} perPage = {perPage} handlePerPage = {handlePerPage} ></Paginator>
       </div>
       </>
     )

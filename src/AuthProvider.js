@@ -6,17 +6,20 @@ import { toast } from "react-toastify";
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+//   const [user, setUser] = useState(localllStorage.getItem("user") || null);
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   const navigate = useNavigate();
   const loginAction =  (data) => {
     login(data)
     .then((res) => {
-      console.log(res.data?.data);
       setUser(res.data.data);
       setToken(res.data.data.access_token);
+      localStorage.setItem("user", JSON.stringify(res.data.data));
       localStorage.setItem("token", res.data.data.access_token);
-      toast.success(res.data.message, { autoClose: 2000 })
       navigate("/");
       return;
 
@@ -29,8 +32,6 @@ const AuthProvider = ({ children }) => {
   };
 
   const logoutAction = () => {
-    console.log("logout action");
-    console.log(token);
     logout({ 
       headers: {
         Authorization: `Bearer ${token}`
@@ -40,7 +41,7 @@ const AuthProvider = ({ children }) => {
         setUser(null);
         setToken("");
         localStorage.removeItem("token");
-        toast.success(res.data.message, { autoClose: 2000 });
+        localStorage.removeItem("user");
         navigate("/login"); 
     })
     .catch((error) => {
@@ -53,7 +54,7 @@ const AuthProvider = ({ children }) => {
 
 
   return (
-    <AuthContext.Provider value={{ token, user, loginAction , logoutAction }}>
+    <AuthContext.Provider value={{user, token, loginAction , logoutAction }}>
       {children}
     </AuthContext.Provider>
   );

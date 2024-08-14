@@ -19,6 +19,16 @@ const PrivateRoute = () => {
   return <Outlet />;
 };
 
+const AdminRoute = () => {
+  const { user } = useAuth(); 
+  console.log(user) 
+  if (!user.roles.includes("admin")) {
+    return <h1>Not Authorized</h1>;
+  }
+
+  return <Outlet />;
+};
+
 function App() {
   return (
     <Router>
@@ -33,9 +43,13 @@ function App() {
             <Route element={<PrivateRoute />}>
               <Route path="categories">
                 <Route index element={<ListCategory />} />
-                <Route path="create" element={<CreateCategory />} />
                 <Route path=":id/show" element={<ShowCategory />} />
-                <Route path=":id/update" element={<UpdateCategory />} />
+                
+                {/* Protecting these routes with AdminRoute */}
+                <Route element={<AdminRoute />}>
+                  <Route path="create" element={<CreateCategory />} />
+                  <Route path=":id/update" element={<UpdateCategory />} />
+                </Route>
               </Route>
             </Route>
           </Route>

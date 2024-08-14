@@ -29,3 +29,9 @@ export default function Login() {
     </>
   );
 }
+
+// export function Logout (){
+//   console.log("logout in login")
+//   const auth = useAuth();
+//   auth.logoutAction();
+// }

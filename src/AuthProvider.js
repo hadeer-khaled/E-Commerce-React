@@ -1,6 +1,6 @@
 import { useContext, createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "api/auth";
+import { login , logout } from "api/auth";
 import { toast } from "react-toastify";
 
 const AuthContext = createContext();
@@ -28,15 +28,32 @@ const AuthProvider = ({ children }) => {
     });
   };
 
-//   const logout = () => {
-//     setUser(null);
-//     setToken("");
-//     localStorage.removeItem("site");
-//     navigate("/");
-//   };
+  const logoutAction = () => {
+    console.log("logout action");
+    console.log(token);
+    logout({ 
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then((res) => {
+        setUser(null);
+        setToken("");
+        localStorage.removeItem("token");
+        toast.success(res.data.message, { autoClose: 2000 });
+        navigate("/login"); 
+    })
+    .catch((error) => {
+        if (error.response.status === 401) {
+            console.log(error.response.data.message);
+            toast.error(error.response.data.message, { autoClose: 2000 });
+        }
+    });
+};
+
 
   return (
-    <AuthContext.Provider value={{ token, user, loginAction }}>
+    <AuthContext.Provider value={{ token, user, loginAction , logoutAction }}>
       {children}
     </AuthContext.Provider>
   );

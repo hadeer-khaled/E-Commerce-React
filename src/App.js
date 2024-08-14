@@ -15,7 +15,6 @@ import UserLayout from 'layouts/UserLayout';
 
 const PrivateRoute = () => {
   const auth = useAuth();
-  console.log("auth: ",auth);
   if (!auth.token) return <Navigate to="/login" />;
   return <Outlet />;
 };

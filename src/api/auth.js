@@ -15,3 +15,8 @@ export const login = (formData) => {
     },
   });
 };
+
+export const logout = (config) => {
+  return axios_instance.post(`logout`, null, config);
+};
+

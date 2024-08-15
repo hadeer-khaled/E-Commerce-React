@@ -20,12 +20,13 @@ import ShowCategory from "features/Category/pages/Show";
 import ListProduct from "features/Product/pages/List";
 // import CreateProduct from "features/Product/pages/Create";
 // import UpdateProduct from "features/Product/pages/Update";
-// import ShowProduct from "features/Product/pages/Show";
+import ShowProduct from "features/Product/pages/Show";
 
 /* Layouts */
 import UserLayout from "layouts/UserLayout";
 import NotFound from 'layouts/NotFound'
 import NotAuthorized from 'layouts/NotAuthorized'
+import Home from 'layouts/Home'
 
 const PrivateRoute = () => {
   const auth = useAuth();
@@ -49,7 +50,7 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<UserLayout />}>
-            <Route index element={<h1>Home</h1>} />
+            <Route index element={<Home/>} />
 
             <Route path="register" element={<Register />} />
             <Route path="login" element={<Login />} />
@@ -67,6 +68,7 @@ function App() {
 
               <Route path="products">
                 <Route index element={<ListProduct />} />
+                <Route path=":id/show" element={<ShowProduct />} />
               </Route>
             </Route>
           </Route>

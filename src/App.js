@@ -24,6 +24,8 @@ import ListProduct from "features/Product/pages/List";
 
 /* Layouts */
 import UserLayout from "layouts/UserLayout";
+import NotFound from 'layouts/NotFound'
+import NotAuthorized from 'layouts/NotAuthorized'
 
 const PrivateRoute = () => {
   const auth = useAuth();
@@ -35,7 +37,7 @@ const AdminRoute = () => {
   const { user } = useAuth();
   console.log(user);
   if (!user.roles.includes("admin")) {
-    return <h1>Not Authorized</h1>;
+    return <NotAuthorized/>;
   }
 
   return <Outlet />;
@@ -69,7 +71,7 @@ function App() {
             </Route>
           </Route>
 
-          <Route path="*" element={<h1>Not Found</h1>} />
+          <Route path="*" element={<NotFound/>} />
         </Routes>
       </AuthProvider>
     </Router>

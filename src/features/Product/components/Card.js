@@ -5,16 +5,20 @@ const ProductCard = ({ product }) => {
     <>
       <div className="card bg-base-100  shadow-xl">
         <div className="avatar">
-          <div className="w-63 rounded">
-            <img
-              src={
-                product.images.length != 0
-                  ? product.images[0]
-                  : "https://www.naggl.org/global_graphics/default-store-350x350.jpg"
-              }
-              alt="product"
-            />
-          </div>
+          {product.images ? (
+            <div className="w-63 rounded">
+              <img
+                src={
+                  product?.images?.length != 0
+                    ? product.images[0]
+                    : "https://www.naggl.org/global_graphics/default-store-350x350.jpg"
+                }
+                alt="product"
+              />
+            </div>
+          ) : (
+            ""
+          )}
         </div>
         <div className="card-body">
           <h2 className="card-title">
@@ -23,10 +27,13 @@ const ProductCard = ({ product }) => {
           </h2>
           <p>{product.price}</p>
           <div className="card-actions justify-end">
-            <NavLink className="btn" to={`${product.id}/show`}>
+            <NavLink className="btn" to={`/products/${product.id}/show`}>
               See details
             </NavLink>
-            <NavLink className="btn btn-primary" to={`${product.id}/Update`}>
+            <NavLink
+              className="btn btn-primary"
+              to={`/products/${product.id}/Update`}
+            >
               Edit
             </NavLink>
           </div>

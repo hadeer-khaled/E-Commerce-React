@@ -19,7 +19,7 @@ import ShowCategory from "features/Category/pages/Show";
 
 import ListProduct from "features/Product/pages/List";
 // import CreateProduct from "features/Product/pages/Create";
-// import UpdateProduct from "features/Product/pages/Update";
+import UpdateProduct from "features/Product/pages/Update";
 import ShowProduct from "features/Product/pages/Show";
 
 /* Layouts */
@@ -68,6 +68,7 @@ function App() {
 
               <Route path="products">
                 <Route index element={<ListProduct />} />
+                <Route path=":id/update" element={<UpdateProduct />} />
                 <Route path=":id/show" element={<ShowProduct />} />
               </Route>
             </Route>

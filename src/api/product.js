@@ -28,3 +28,10 @@ export const deleteProductById = (product_id) => {
   return axios_instance.delete(`products/${product_id}`);
 };
 
+export const storeImages = (images) => {
+  return axios_instance.post(`products/store-images`, images, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};

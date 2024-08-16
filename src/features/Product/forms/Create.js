@@ -1,7 +1,7 @@
 
 export default function Create({formik  , categories}) {
   return (
-    <form onSubmit={formik.handleSubmit} className="p-4">
+    <form onSubmit={formik.handleSubmit} >
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
           Title

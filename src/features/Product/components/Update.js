@@ -1,19 +1,22 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
 import { useFormik } from "formik";
 
-import CreateProductForm from "features/Product/forms/Create";
+import UpdateProductForm from "features/Product/forms/Update";
 
 import { getCategoies } from "api/category";
-import { createProduct, storeImages } from "api/product";
+import { updateProductById, getProductById, storeImages } from "api/product";
 import CreateProductSchema from "features/Product/schemas/Create";
 import StoreImages from "features/Product/forms/StoreImages";
 
 import StoreImagesSchema from "features/Product/schemas/StoreImages";
 import { toast } from "react-toastify";
-
-export default function Create() {
+export default function Update() {
+  const { id } = useParams();
   const [categories, setCategories] = useState([]);
-  const [imagePaths, setImagePaths] = useState([]);
+  const [oldImages, setOldImages] = useState([]);
+  const [newImagePaths, setNewImagePaths] = useState([]);
   const [imagePreview, setImagePreview] = useState([]);
 
   useEffect(() => {
@@ -24,7 +27,20 @@ export default function Create() {
       .catch((error) => {
         console.error("Error fetching categories:", error);
       });
-  }, []);
+    getProductById(id)
+      .then((response) => {
+        formik.setValues({
+          title: response.data.data.title || "",
+          price: response.data.data.price || "",
+          description: response.data.data.description || "",
+          category_id: response.data.data.category_id || "",
+        });
+        setOldImages(response.data.data.images);
+      })
+      .catch((error) => {
+        console.error("Error fetching categories:", error);
+      });
+  }, [id]);
 
   const formik = useFormik({
     initialValues: {
@@ -42,20 +58,20 @@ export default function Create() {
       formData.append("price", values.price);
       formData.append("description", values.description);
       formData.append("category_id", values.category_id);
-      imagePaths.forEach((imagePath, index) => {
+      formData.append("_method", "PUT");
+      newImagePaths.forEach((imagePath, index) => {
         formData.append(`paths[${index}]`, imagePath);
       });
 
-      createProduct(formData)
+      updateProductById(id, formData)
         .then((response) => {
-          console.log("Product created successfully:", response.data);
+          console.log("Product created successfully:", response.data.data);
         })
         .catch((error) => {
           console.error("Error creating product:", error);
         });
     },
   });
-
   const imageFormik = useFormik({
     initialValues: {
       images: [],
@@ -71,7 +87,7 @@ export default function Create() {
       });
       storeImages(ImagesFormData)
         .then((res) => {
-          setImagePaths(res.data.paths);
+          setNewImagePaths(res.data.paths);
           toast.success(res.data.message, { autoClose: 2000 });
           console.log(res.data.paths);
         })
@@ -90,16 +106,31 @@ export default function Create() {
 
   return (
     <>
-      <div className="card bg-base-100  shadow-xl p-4">
-        <div className="card-body">
-          <h2 className="card-title">Create Product</h2>
-          <StoreImages
-            imageFormik={imageFormik}
-            handleImageChange={handleImageChange}
-            imagePreview={imagePreview}
-          ></StoreImages>
-          <CreateProductForm formik={formik} categories={categories} />
+      <div className="p-4">
+        <div className="flex flex-wrap mt-4 space-x-4">
+          {oldImages.length === 0 ? (
+            <p>No Images for this product</p>
+          ) : (
+            <>
+              <p>Old Images</p>
+              {oldImages.map((path, index) => (
+                <img
+                  key={index}
+                  src={path}
+                  alt={`Preview ${index + 1}`}
+                  className="w-24 h-24 object-cover border rounded"
+                />
+              ))}
+            </>
+          )}
         </div>
+
+        <StoreImages
+          imageFormik={imageFormik}
+          handleImageChange={handleImageChange}
+          imagePreview={imagePreview}
+        ></StoreImages>
+        <UpdateProductForm formik={formik} categories={categories} />
       </div>
     </>
   );

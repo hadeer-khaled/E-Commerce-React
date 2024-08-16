@@ -5,7 +5,7 @@ export default function StoreImages({
 }) {
   return (
     <>
-      <form onSubmit={imageFormik.handleSubmit} className="p-4">
+      <form onSubmit={imageFormik.handleSubmit}>
         <div className="">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Upload Product Images

@@ -1,7 +1,9 @@
-import React from 'react'
+import UpdateProductComponent from "features/Product/components/Update"
 
 export default function Update() {
   return (
-    <div>Update</div>
+   <>
+    <UpdateProductComponent/>
+   </>
   )
 }

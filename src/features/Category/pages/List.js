@@ -7,7 +7,7 @@ const List  = () => {
   const [categoriesList , setCategoriesList] = useState([])
   const [pagination, setPagination] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-  const [perPage, setPerPage] = useState(8);
+  const [perPage, setPerPage] = useState(4);
   const [filter ,  setFilter] = useState(null)
 
   useEffect(() => {
@@ -17,8 +17,8 @@ const List  = () => {
   const fetchCategories =(currentPage, perPage , filter)=>{
     getCategoies({page: currentPage , perPage:perPage , search:filter })
     .then(response => {
-      setCategoriesList(response.data.data.data)
-      setPagination(response.data.data);
+      setCategoriesList(response.data.data)
+      setPagination(response.data);
     })
     .catch(error => {
         console.error('Error fetching categories:', error);

@@ -7,7 +7,7 @@ const List  = () => {
   const [productsList , setProductsList] = useState([])
   const [pagination, setPagination] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-  const [perPage, setPerPage] = useState(8);
+  const [perPage, setPerPage] = useState(4);
   const [filter ,  setFilter] = useState(null)
 
   useEffect(() => {

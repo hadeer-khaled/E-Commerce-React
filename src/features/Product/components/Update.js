@@ -66,6 +66,7 @@ export default function Update() {
       updateProductById(id, formData)
         .then((response) => {
           console.log("Product created successfully:", response.data.data);
+          toast.success(response.data.message, { autoClose: 2000 });
         })
         .catch((error) => {
           console.error("Error creating product:", error);

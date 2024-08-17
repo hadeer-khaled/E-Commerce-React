@@ -8,10 +8,12 @@ import UpdateCategoryForm from "features/Category/forms/Update";
 import UpdateCategoryImage from "features/Category/forms/UpdateImage";
 import { updateCategoryById } from "api/category";
 import { getCategoryById } from "api/category";
+import Loader from "components/Loader/Loader"
 
 export default function UpdateCategoryComponent() {
   const { id } = useParams();
-
+  
+  const [loading, setLoading] = useState(true); 
   const [category, setCategory] = useState(null);
 
   const formik = useFormik({
@@ -72,14 +74,15 @@ export default function UpdateCategoryComponent() {
         imageFormik.setValues({
           image: response.data.data.image || "",
         });
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching categories:", error);
       });
   }, [id]);
 
-  if (!category) {
-    return <div>Loading...</div>;
+  if (loading) {
+    return <Loader />;
   }
   return (
     <>

@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getCategoryById, deleteCategoryById } from "api/category";
 import ProductCard from "features/Product/components/Card";
-
+import Loader from "components/Loader/Loader"
 const Show = () => {
   const navigator = useNavigate();
   const { id } = useParams();
 
   const [category, setCategory] = useState(null);
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     const fetchCategory = async () => {
@@ -16,9 +16,9 @@ const Show = () => {
         const response = await getCategoryById(id);
         setCategory(response.data.data);
       } catch (error) {
-        console.error('Error fetching category:', error);
+        console.error("Error fetching category:", error);
       } finally {
-        setLoading(false); // Set loading to false after fetch completes
+        setLoading(false);
       }
     };
 
@@ -32,15 +32,13 @@ const Show = () => {
         navigator("/categories");
       })
       .catch((error) => {
-        console.error('Error deleting category:', error);
+        console.error("Error deleting category:", error);
       });
   };
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full border-primary border-t-transparent"></div>
-      </div>
+      <Loader/>
     );
   }
 
@@ -48,10 +46,15 @@ const Show = () => {
     <>
       {category ? (
         <>
-          <p className="text-2xl font-bold">{category.title}</p>
-          <button className="btn btn-outline btn-error mt-4" onClick={() => deleteHandler(category.id)}>
-            Delete
-          </button>
+          <div className="flex items-center justify-center">
+            <h1 className="text-2xl font-bold">{category.title}</h1>
+            <button
+              className="btn btn-outline btn-error mx-6"
+              onClick={() => deleteHandler(category.id)}
+            >
+              Delete
+            </button>
+          </div>
           <div className="container mx-auto px-4 grid grid-cols-4 gap-4 mt-4">
             {category.products?.map((product) => (
               <ProductCard product={product} key={`product_${product.id}`} />

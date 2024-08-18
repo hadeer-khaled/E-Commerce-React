@@ -54,11 +54,11 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
           </Route>
-          
-          <Route path="/" element={<Dashboard />}>
-            <Route index element={<Home />} />
 
-            <Route element={<PrivateRoute />}>
+          <Route element={<PrivateRoute />}>
+            <Route path="/" element={<Dashboard />}>
+              <Route index element={<Home />} />
+
               <Route path="categories">
                 <Route index element={<ListCategory />} />
                 <Route path=":id/show" element={<ShowCategory />} />

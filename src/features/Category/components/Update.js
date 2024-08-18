@@ -17,6 +17,23 @@ export default function UpdateCategoryComponent() {
   const [loading, setLoading] = useState(true);
   const [category, setCategory] = useState(null);
 
+  useEffect(() => {
+    getCategoryById(id)
+      .then((response) => {
+        setCategory(response.data.data);
+        formik.setValues({
+          title: response.data.data.title || "",
+        });
+        imageFormik.setValues({
+          image: response.data.data.image || "",
+        });
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching categories:", error);
+      });
+  }, [id]);
+
   const formik = useFormik({
     initialValues: { title: "" },
     validationSchema: createCategorySchema,
@@ -68,28 +85,29 @@ export default function UpdateCategoryComponent() {
     console.log(file);
   };
 
-  useEffect(() => {
-    getCategoryById(id)
-      .then((response) => {
-        setCategory(response.data.data);
-        formik.setValues({
-          title: response.data.data.title || "",
-        });
-        imageFormik.setValues({
-          image: response.data.data.image || "",
-        });
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching categories:", error);
-      });
-  }, [id]);
-
   if (loading) {
     return <Loader />;
   }
   return (
     <>
+      <div className="flex flex-wrap mt-4 space-x-4">
+        {category.image ? (
+          <>
+            <p>Old Image</p>
+            {
+              <img
+                src={category.image}
+                alt={`Preview`}
+                className="w-24 h-24 object-cover border rounded"
+              />
+            }
+          </>
+        ) : (
+          <>
+            <p>No Image for this category</p>
+          </>
+        )}
+      </div>
       <div className="card bg-base-100 w-96 shadow-xl  p-10">
         <UpdateCategoryForm formik={formik}></UpdateCategoryForm>
         <UpdateCategoryImage

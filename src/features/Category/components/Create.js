@@ -4,9 +4,12 @@ import createCategorySchema from "features/Category/schemas/CreateCategorySchema
 import { toast } from "react-toastify";
 import CreateCategoryForm from "features/Category/forms/Create";
 import { createCategory } from "api/category";
+import { useNavigate } from "react-router-dom";
 
 export default function Create() {
   const [imagePreview, setImagePreview] = useState("");
+
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -24,8 +27,10 @@ export default function Create() {
       }
       createCategory(formData)
         .then((response) => {
-          toast.success(response.data.message, { autoClose: 2000 });
-          actions.resetForm();
+          toast.success(response.data.message, { autoClose: 1500 });
+          setTimeout(() => {
+            navigate("/categories");
+          }, 1500);
         })
         .catch((error) => {
           actions.setErrors(error);

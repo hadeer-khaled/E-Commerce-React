@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, deleteHandler }) => {
   return (
     <>
       <div className="card bg-base-100  shadow-xl">
@@ -36,6 +36,12 @@ const ProductCard = ({ product }) => {
             >
               Edit
             </NavLink>
+            <button
+              className="btn btn-error"
+              onClick={() => deleteHandler(product.id)}
+            >
+              Delete
+            </button>
           </div>
         </div>
       </div>

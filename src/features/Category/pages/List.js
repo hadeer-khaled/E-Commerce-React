@@ -5,6 +5,8 @@ import CategoryCard from "features/Category/components/Card";
 import Filter from "components/Filter/Filter";
 import Loader from "components/Loader/Loader";
 import { NavLink } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const List = () => {
   const [categoriesList, setCategoriesList] = useState([]);
@@ -54,8 +56,8 @@ const List = () => {
   const deleteHandler = (category_id) => {
     deleteCategoryById(category_id)
       .then((res) => {
-        console.log(res.data.message);
         fetchCategories(currentPage, perPage, filter);
+        toast.success(res.data.message, { autoClose: 2000 });
       })
       .catch((error) => {
         console.error("Error deleting category:", error);
@@ -105,6 +107,7 @@ const List = () => {
           ></Paginator>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };

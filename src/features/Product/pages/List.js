@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { getProducts } from "api/product";
+import { getProducts, deleteProductById } from "api/product";
 import Paginator from "components/Paginator/Paginator";
 import ProductCard from "features/Product/components/Card";
 import Filter from "components/Filter/Filter";
 import Loader from "components/Loader/Loader";
 import { NavLink } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const List = () => {
   const [productsList, setProductsList] = useState([]);
@@ -49,6 +51,17 @@ const List = () => {
       : fetchProducts(currentPage, perPage, filter.toLowerCase());
   };
 
+  const deleteHandler = (product_id) => {
+    deleteProductById(product_id)
+      .then((res) => {
+        fetchProducts(currentPage, perPage, filter);
+        toast.success(res.data.message, { autoClose: 2000 });
+      })
+      .catch((error) => {
+        console.error("Error deleting product:", error);
+      });
+  };
+
   if (loading) {
     return <Loader />;
   }
@@ -72,6 +85,7 @@ const List = () => {
               return (
                 <ProductCard
                   product={product}
+                  deleteHandler={deleteHandler}
                   key={`product_${product.id}`}
                 ></ProductCard>
               );
@@ -90,6 +104,7 @@ const List = () => {
           ></Paginator>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };

@@ -73,7 +73,6 @@ export default function Create() {
         .then((res) => {
           setImagePaths(res.data.paths);
           toast.success(res.data.message, { autoClose: 2000 });
-          console.log(res.data.paths);
         })
         .catch((err) => {
           console.log(err);

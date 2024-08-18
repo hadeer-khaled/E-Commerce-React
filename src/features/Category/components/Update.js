@@ -16,6 +16,7 @@ export default function UpdateCategoryComponent() {
 
   const [loading, setLoading] = useState(true);
   const [category, setCategory] = useState(null);
+  const [imagePreview, setImagePreview] = useState('');
 
   useEffect(() => {
     getCategoryById(id)
@@ -82,7 +83,7 @@ export default function UpdateCategoryComponent() {
   const handleImageChange = (event) => {
     const file = event.currentTarget.files[0];
     imageFormik.setFieldValue("image", file);
-    console.log(file);
+    setImagePreview(URL.createObjectURL(file));
   };
 
   if (loading) {
@@ -108,12 +109,13 @@ export default function UpdateCategoryComponent() {
           </>
         )}
       </div>
-      <div className="card bg-base-100 w-96 shadow-xl  p-10">
-        <UpdateCategoryForm formik={formik}></UpdateCategoryForm>
+      <div className="card bg-base-100 shadow-xl  p-10">
         <UpdateCategoryImage
           imageFormik={imageFormik}
           handleImageChange={handleImageChange}
+          imagePreview={imagePreview}
         ></UpdateCategoryImage>
+        <UpdateCategoryForm formik={formik}></UpdateCategoryForm>
       </div>
     </>
   );

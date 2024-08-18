@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getCategoies } from "api/category";
+import { getCategoies, deleteCategoryById } from "api/category";
 import Paginator from "components/Paginator/Paginator";
 import CategoryCard from "features/Category/components/Card";
 import Filter from "components/Filter/Filter";
@@ -51,6 +51,15 @@ const List = () => {
       fetchCategories(currentPage, perPage, filter.toLowerCase());
     }
   };
+  const deleteHandler = (category_id) => {
+    deleteCategoryById(category_id)
+      .then((res) => {
+        console.log(res.data.message);
+      })
+      .catch((error) => {
+        console.error("Error deleting category:", error);
+      });
+  };
 
   if (loading) {
     return <Loader />;
@@ -64,7 +73,10 @@ const List = () => {
             handleFilterInput={handleFilterInput}
             handleFilter={handleFilter}
           ></Filter>
-          <NavLink to="/categories/create" className="btn btn-info"> Add a new Category</NavLink>
+          <NavLink to="/categories/create" className="btn btn-info">
+            {" "}
+            Add a new Category
+          </NavLink>
         </div>
 
         <div className="px-4 grid grid-cols-4 gap-4">
@@ -73,6 +85,7 @@ const List = () => {
               return (
                 <CategoryCard
                   category={category}
+                  deleteHandler={deleteHandler}
                   key={`category_${category.id}`}
                 ></CategoryCard>
               );

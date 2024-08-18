@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getCategoryById, deleteCategoryById } from "api/category";
 import ProductCard from "features/Product/components/Card";
-import Loader from "components/Loader/Loader"
+import Loader from "components/Loader/Loader";
 const Show = () => {
   const navigator = useNavigate();
   const { id } = useParams();
 
   const [category, setCategory] = useState(null);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCategory = async () => {
@@ -37,9 +37,7 @@ const Show = () => {
   };
 
   if (loading) {
-    return (
-      <Loader/>
-    );
+    return <Loader />;
   }
 
   return (

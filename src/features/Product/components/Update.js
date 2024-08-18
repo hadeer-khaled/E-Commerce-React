@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { useFormik } from "formik";
@@ -14,6 +14,8 @@ import StoreImagesSchema from "features/Product/schemas/StoreImages";
 import { toast } from "react-toastify";
 export default function Update() {
   const { id } = useParams();
+  const imageRef = useRef(null);
+
   const [categories, setCategories] = useState([]);
   const [oldImages, setOldImages] = useState([]);
   const [newImagePaths, setNewImagePaths] = useState([]);
@@ -82,23 +84,6 @@ export default function Update() {
       images: [],
     },
     validationSchema: StoreImagesSchema,
-
-    // onSubmit: (values) => {
-
-    //   const ImagesFormData = new FormData();
-    //   values.images.forEach((image, index) => {
-    //     ImagesFormData.append(`images[${index}]`, image);
-    //   });
-    //   storeImages(ImagesFormData)
-    //     .then((res) => {
-    //       setNewImagePaths(res.data.paths);
-    //       toast.success(res.data.message, { autoClose: 2000 });
-    //       console.log(res.data.paths);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // },
   });
 
   const uploadImages = (files) => {
@@ -122,6 +107,14 @@ export default function Update() {
     const filePreviews = files.map((file) => URL.createObjectURL(file));
     setImagePreview(filePreviews);
     uploadImages(files);
+  };
+  const handleDeleteImages = () => {
+    imageFormik.setFieldValue("images", []);
+    setImagePreview([]);
+    setNewImagePaths([]);
+    if (imageRef.current) {
+      imageRef.current.value = "";
+    }
   };
 
   return (
@@ -149,6 +142,8 @@ export default function Update() {
           imageFormik={imageFormik}
           handleImageChange={handleImageChange}
           imagePreview={imagePreview}
+          handleDeleteImages={handleDeleteImages}
+          imageRef={imageRef}
         ></StoreImages>
         <UpdateProductForm formik={formik} categories={categories} />
       </div>

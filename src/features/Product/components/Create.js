@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useFormik } from "formik";
 
 import CreateProductForm from "features/Product/forms/Create";
@@ -8,11 +8,11 @@ import { createProduct, storeImages } from "api/product";
 import CreateProductSchema from "features/Product/schemas/Create";
 import StoreImages from "features/Product/forms/StoreImages";
 
-import StoreImagesSchema from "features/Product/schemas/StoreImages";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 export default function Create() {
+  const imageRef = useRef(null);
   const [categories, setCategories] = useState([]);
   const [imagePaths, setImagePaths] = useState([]);
   const [imagePreview, setImagePreview] = useState([]);
@@ -64,24 +64,6 @@ export default function Create() {
     initialValues: {
       images: [],
     },
-    validationSchema: StoreImagesSchema,
-
-    // onSubmit: (values) => {
-    //   console.log(values);
-
-    //   const ImagesFormData = new FormData();
-    //   values.images.forEach((image, index) => {
-    //     ImagesFormData.append(`images[${index}]`, image);
-    //   });
-    //   storeImages(ImagesFormData)
-    //     .then((res) => {
-    //       setImagePaths(res.data.paths);
-    //       toast.success(res.data.message, { autoClose: 2000 });
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // },
   });
 
   const uploadImages = (files) => {
@@ -106,6 +88,14 @@ export default function Create() {
     setImagePreview(filePreviews);
     uploadImages(files);
   };
+  const handleDeleteImages = () => {
+    imageFormik.setFieldValue("images", []);
+    setImagePreview([]);
+    setImagePaths([]);
+    if (imageRef.current) {
+      imageRef.current.value = "";
+    }
+  };
 
   return (
     <>
@@ -116,6 +106,8 @@ export default function Create() {
             imageFormik={imageFormik}
             handleImageChange={handleImageChange}
             imagePreview={imagePreview}
+            handleDeleteImages={handleDeleteImages}
+            imageRef={imageRef}
           ></StoreImages>
           <CreateProductForm formik={formik} categories={categories} />
         </div>

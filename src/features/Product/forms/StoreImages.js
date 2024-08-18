@@ -2,6 +2,8 @@ export default function StoreImages({
   imageFormik,
   handleImageChange,
   imagePreview,
+  handleDeleteImages,
+  imageRef,
 }) {
   return (
     <>
@@ -14,6 +16,8 @@ export default function StoreImages({
             <input
               type="file"
               name="images"
+              accept="image/*"
+              ref={imageRef}
               multiple
               onChange={handleImageChange}
               // className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -32,18 +36,21 @@ export default function StoreImages({
                 />
               ))}
             </div>
-            {/* <button
-              type="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              disabled={!imageFormik.isValid}
-            >
-              Upload Images
-            </button> */}
             {imageFormik.errors.images && (
               <p className="text-red-500 text-xs italic mt-2">
                 You must select at least 1 image before upload it
               </p>
             )}
+            <button
+              type="button"
+              className="btn btn-error"
+              onClick={handleDeleteImages}
+            >
+              Delete Images
+            </button>
+            <button type="button" className="btn">
+              Download Images
+            </button>
           </div>
         </div>
       </form>

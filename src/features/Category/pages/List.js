@@ -55,6 +55,7 @@ const List = () => {
     deleteCategoryById(category_id)
       .then((res) => {
         console.log(res.data.message);
+        fetchCategories(currentPage, perPage, filter);
       })
       .catch((error) => {
         console.error("Error deleting category:", error);

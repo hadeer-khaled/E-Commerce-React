@@ -5,6 +5,7 @@ export const register = (formData) => {
     headers: {
       "Content-Type": "multipart/form-data",
     },
+    skipInterceptor: true,
   });
 };
 
@@ -13,10 +14,10 @@ export const login = (formData) => {
     headers: {
       "Content-Type": "multipart/form-data",
     },
+    skipInterceptor: true,
   });
 };
 
 export const logout = (config) => {
   return axios_instance.post(`logout`, null, config);
 };
-

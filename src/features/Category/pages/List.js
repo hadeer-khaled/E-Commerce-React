@@ -3,7 +3,7 @@ import { getCategoies } from "api/category";
 import Paginator from "components/Paginator/Paginator";
 import CategoryCard from "features/Category/components/Card";
 import Filter from "components/Filter/Filter";
-import Loader from "components/Loader/Loader"
+import Loader from "components/Loader/Loader";
 
 const List = () => {
   const [categoriesList, setCategoriesList] = useState([]);
@@ -11,8 +11,7 @@ const List = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(4);
   const [filter, setFilter] = useState(null);
-  const [loading, setLoading] = useState(true); 
-
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchCategories(currentPage, perPage, filter);
@@ -27,8 +26,7 @@ const List = () => {
       })
       .catch((error) => {
         console.error("Error fetching categories:", error);
-      }
-    );
+      });
   };
   const handlePageChange = (url) => {
     if (url) {
@@ -45,9 +43,12 @@ const List = () => {
   };
 
   const handleFilter = (ToClear = false) => {
-    ToClear
-      ? fetchCategories(currentPage, perPage)
-      : fetchCategories(currentPage, perPage, filter.toLowerCase());
+    if (ToClear) {
+      fetchCategories(currentPage, perPage);
+      setFilter("");
+    } else {
+      fetchCategories(currentPage, perPage, filter.toLowerCase());
+    }
   };
 
   if (loading) {

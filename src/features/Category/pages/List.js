@@ -50,7 +50,7 @@ const List = () => {
       fetchCategories(currentPage, perPage);
       setFilter("");
     } else {
-      fetchCategories(currentPage, perPage, filter.toLowerCase());
+      fetchCategories(currentPage, perPage, filter?.toLowerCase());
     }
   };
   const deleteHandler = (category_id) => {

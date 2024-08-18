@@ -48,7 +48,7 @@ const List = () => {
   const handleFilter = (ToClear = false) => {
     ToClear
       ? fetchProducts(currentPage, perPage)
-      : fetchProducts(currentPage, perPage, filter.toLowerCase());
+      : fetchProducts(currentPage, perPage, filter?.toLowerCase());
   };
 
   const deleteHandler = (product_id) => {

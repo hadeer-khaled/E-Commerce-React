@@ -83,30 +83,45 @@ export default function Update() {
     },
     validationSchema: StoreImagesSchema,
 
-    onSubmit: (values) => {
-      console.log(imagePreview);
+    // onSubmit: (values) => {
 
-      const ImagesFormData = new FormData();
-      values.images.forEach((image, index) => {
-        ImagesFormData.append(`images[${index}]`, image);
-      });
-      storeImages(ImagesFormData)
-        .then((res) => {
-          setNewImagePaths(res.data.paths);
-          toast.success(res.data.message, { autoClose: 2000 });
-          console.log(res.data.paths);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
+    //   const ImagesFormData = new FormData();
+    //   values.images.forEach((image, index) => {
+    //     ImagesFormData.append(`images[${index}]`, image);
+    //   });
+    //   storeImages(ImagesFormData)
+    //     .then((res) => {
+    //       setNewImagePaths(res.data.paths);
+    //       toast.success(res.data.message, { autoClose: 2000 });
+    //       console.log(res.data.paths);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // },
   });
 
+  const uploadImages = (files) => {
+    const ImagesFormData = new FormData();
+    files.forEach((image, index) => {
+      ImagesFormData.append(`images[${index}]`, image);
+    });
+    storeImages(ImagesFormData)
+      .then((res) => {
+        setNewImagePaths(res.data.paths);
+        toast.success(res.data.message, { autoClose: 2000 });
+        console.log(res.data.paths);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     imageFormik.setFieldValue("images", files);
     const filePreviews = files.map((file) => URL.createObjectURL(file));
     setImagePreview(filePreviews);
+    uploadImages(files);
   };
 
   return (

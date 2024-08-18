@@ -32,33 +32,37 @@ const Navbar = () => {
       </div>
       <div className="flex space-x-4 ml-auto">
         {auth.token ? (
-          <button
-            className="px-3 py-2 rounded-md text-sm font-medium bg-red-600 hover:bg-red-700"
-            onClick={auth.logoutAction}
-          >
-            Logout
-          </button>
+          <>
+            <p> {auth.user.name}</p>
+            <button
+              className="px-3 py-2 rounded-md text-sm font-medium bg-red-600 hover:bg-red-700"
+              onClick={auth.logoutAction}
+            >
+              Logout
+            </button>
+          </>
         ) : (
           ""
         )}
 
-        {!auth.token ? 
-        <>
-          <NavLink
-          className="px-3 py-2 rounded-md text-sm font-medium bg-blue-600 hover:bg-blue-700"
-          to={"/login"}
-          >
-          Login
-        </NavLink>
-        <NavLink
-          className="px-3 py-2 rounded-md text-sm font-medium bg-green-600 hover:bg-green-700"
-          to={"/register"}
-          >
-          Register
-        </NavLink>
-          </> : ""
-        }
-      
+        {!auth.token ? (
+          <>
+            <NavLink
+              className="px-3 py-2 rounded-md text-sm font-medium bg-blue-600 hover:bg-blue-700"
+              to={"/login"}
+            >
+              Login
+            </NavLink>
+            <NavLink
+              className="px-3 py-2 rounded-md text-sm font-medium bg-green-600 hover:bg-green-700"
+              to={"/register"}
+            >
+              Register
+            </NavLink>
+          </>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

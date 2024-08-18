@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import { useFormik } from "formik";
@@ -8,12 +8,13 @@ import UpdateCategoryForm from "features/Category/forms/Update";
 import UpdateCategoryImage from "features/Category/forms/UpdateImage";
 import { updateCategoryById } from "api/category";
 import { getCategoryById } from "api/category";
-import Loader from "components/Loader/Loader"
+import Loader from "components/Loader/Loader";
 
 export default function UpdateCategoryComponent() {
   const { id } = useParams();
-  
-  const [loading, setLoading] = useState(true); 
+  const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(true);
   const [category, setCategory] = useState(null);
 
   const formik = useFormik({
@@ -30,7 +31,10 @@ export default function UpdateCategoryComponent() {
       });
       updateCategoryById(id, formData)
         .then((response) => {
-          toast.success(response.data.message, { autoClose: 2000 });
+          toast.success(response.data.message, { autoClose: 1500 });
+          setTimeout(() => {
+            navigate("/categories");
+          }, 1500);
         })
         .catch((error) => {
           toast.error(error.response.data.message, { autoClose: 2000 });

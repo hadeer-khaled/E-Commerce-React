@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { useFormik } from "formik";
 
@@ -18,6 +18,7 @@ export default function Update() {
   const [oldImages, setOldImages] = useState([]);
   const [newImagePaths, setNewImagePaths] = useState([]);
   const [imagePreview, setImagePreview] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getCategoies()
@@ -66,7 +67,10 @@ export default function Update() {
       updateProductById(id, formData)
         .then((response) => {
           console.log("Product created successfully:", response.data.data);
-          toast.success(response.data.message, { autoClose: 2000 });
+          toast.success(response.data.message, { autoClose: 1500 });
+          setTimeout(() => {
+            navigate("/products");
+          }, 1500);
         })
         .catch((error) => {
           console.error("Error creating product:", error);

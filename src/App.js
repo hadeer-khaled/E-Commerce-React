@@ -23,10 +23,11 @@ import UpdateProduct from "features/Product/pages/Update";
 import ShowProduct from "features/Product/pages/Show";
 
 /* Layouts */
-import UserLayout from "layouts/UserLayout";
-import NotFound from 'layouts/NotFound'
-import NotAuthorized from 'layouts/NotAuthorized'
-import Home from 'layouts/Home'
+import Dashboard from "layouts/Dashboard";
+import NotFound from "layouts/NotFound";
+import NotAuthorized from "layouts/NotAuthorized";
+import Visitor from "layouts/Visitor";
+import Home from "layouts/Home";
 
 const PrivateRoute = () => {
   const auth = useAuth();
@@ -38,7 +39,7 @@ const AdminRoute = () => {
   const { user } = useAuth();
   console.log(user);
   if (!user.roles.includes("admin")) {
-    return <NotAuthorized/>;
+    return <NotAuthorized />;
   }
 
   return <Outlet />;
@@ -49,11 +50,13 @@ function App() {
     <Router>
       <AuthProvider>
         <Routes>
-          <Route path="/" element={<UserLayout />}>
-            <Route index element={<Home/>} />
-
-            <Route path="register" element={<Register />} />
-            <Route path="login" element={<Login />} />
+          <Route element={<Visitor />}>
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+          </Route>
+          
+          <Route path="/" element={<Dashboard />}>
+            <Route index element={<Home />} />
 
             <Route element={<PrivateRoute />}>
               <Route path="categories">
@@ -75,7 +78,7 @@ function App() {
             </Route>
           </Route>
 
-          <Route path="*" element={<NotFound/>} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </AuthProvider>
     </Router>

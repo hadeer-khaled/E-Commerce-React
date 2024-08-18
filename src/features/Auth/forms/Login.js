@@ -1,4 +1,6 @@
-export default function Login({formik}) {
+import { NavLink } from "react-router-dom";
+
+export default function Login({ formik }) {
   return (
     <form onSubmit={formik.handleSubmit}>
       <label className="input input-bordered flex items-center gap-2">
@@ -55,13 +57,21 @@ export default function Login({formik}) {
       ) : (
         ""
       )}
-      <button
-        type="submit"
-        disabled={!formik.isValid}
-        className="btn btn-outline btn-info btn-wide mt-4"
-      >
-        Login
-      </button>
+      <div className="flex justify-center items-baseline">
+        <button
+          type="submit"
+          disabled={!formik.isValid}
+          className="btn btn-outline btn-info mt-4 mr-2"
+        >
+          Login
+        </button>
+        <p>
+          Don't have an account ?{" "}
+          <NavLink to="/register" className="link link-primary">
+            Register
+          </NavLink>
+        </p>
+      </div>
     </form>
   );
 }

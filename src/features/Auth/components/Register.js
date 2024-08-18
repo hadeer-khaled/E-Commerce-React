@@ -5,7 +5,6 @@ import { register } from "api/auth";
 import { toast } from "react-toastify";
 import { useAuth } from "AuthProvider";
 
-
 export default function Register() {
   const auth = useAuth();
 
@@ -38,7 +37,7 @@ export default function Register() {
   });
   return (
     <>
-      <div className="card card-compact bg-base-100 w-96 shadow-xl">
+      <div className="card card-compact bg-base-100 w-96 shadow-xl mt-10">
         <div className="card-body">
           <h2 className="card-title">Register</h2>
           <RegisterForm formik={formik}></RegisterForm>

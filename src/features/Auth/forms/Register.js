@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 export default function Register({ formik }) {
   return (
     <>
@@ -112,14 +114,21 @@ export default function Register({ formik }) {
         ) : (
           ""
         )}
-
-        <button
-          type="submit"
-          disabled={formik.isSubmitting || !formik.isValid}
-          className="btn btn-outline btn-info btn-wide mt-4"
-        >
-          Register
-        </button>
+        <div className="flex justify-center items-baseline">
+          <button
+            type="submit"
+            disabled={formik.isSubmitting || !formik.isValid}
+            className="btn btn-outline btn-info  mt-4 mr-2"
+          >
+            Register
+          </button>
+          <p>
+            Already have an account ?
+            <NavLink to="/login" className="link link-primary">
+              Login
+            </NavLink>
+          </p>
+        </div>
       </form>
     </>
   );

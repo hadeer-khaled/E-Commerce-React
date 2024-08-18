@@ -20,7 +20,7 @@ export default function Login() {
   });
   return (
     <>
-      <div className="card card-compact bg-base-100 w-96 shadow-xl">
+      <div className="card card-compact bg-base-100 w-96 shadow-xl mt-10">
         <div className="card-body">
           <h2 className="card-title"> Login</h2>
           <LoginForm formik={formik}></LoginForm>

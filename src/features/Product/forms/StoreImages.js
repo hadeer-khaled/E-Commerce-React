@@ -32,13 +32,13 @@ export default function StoreImages({
                 />
               ))}
             </div>
-            <button
+            {/* <button
               type="submit"
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               disabled={!imageFormik.isValid}
             >
               Upload Images
-            </button>
+            </button> */}
             {imageFormik.errors.images && (
               <p className="text-red-500 text-xs italic mt-2">
                 You must select at least 1 image before upload it

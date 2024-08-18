@@ -10,12 +10,14 @@ import StoreImages from "features/Product/forms/StoreImages";
 
 import StoreImagesSchema from "features/Product/schemas/StoreImages";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function Create() {
   const [categories, setCategories] = useState([]);
   const [imagePaths, setImagePaths] = useState([]);
   const [imagePreview, setImagePreview] = useState([]);
 
+  const navigate = useNavigate();
   useEffect(() => {
     getCategoies()
       .then((response) => {
@@ -36,7 +38,6 @@ export default function Create() {
     },
     validationSchema: CreateProductSchema,
     onSubmit: (values) => {
-      console.log(values);
       const formData = new FormData();
       formData.append("title", values.title);
       formData.append("price", values.price);
@@ -48,10 +49,13 @@ export default function Create() {
 
       createProduct(formData)
         .then((response) => {
-          console.log("Product created successfully:", response.data);
+          toast.success(response.data.message, { autoClose: 1500 });
+          setTimeout(() => {
+            navigate("/products");
+          }, 1500);
         })
         .catch((error) => {
-          console.error("Error creating product:", error);
+          toast.success(error.response.data.message, { autoClose: 1500 });
         });
     },
   });
@@ -62,29 +66,45 @@ export default function Create() {
     },
     validationSchema: StoreImagesSchema,
 
-    onSubmit: (values) => {
-      console.log(imagePreview);
+    // onSubmit: (values) => {
+    //   console.log(values);
 
-      const ImagesFormData = new FormData();
-      values.images.forEach((image, index) => {
-        ImagesFormData.append(`images[${index}]`, image);
-      });
-      storeImages(ImagesFormData)
-        .then((res) => {
-          setImagePaths(res.data.paths);
-          toast.success(res.data.message, { autoClose: 2000 });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
+    //   const ImagesFormData = new FormData();
+    //   values.images.forEach((image, index) => {
+    //     ImagesFormData.append(`images[${index}]`, image);
+    //   });
+    //   storeImages(ImagesFormData)
+    //     .then((res) => {
+    //       setImagePaths(res.data.paths);
+    //       toast.success(res.data.message, { autoClose: 2000 });
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // },
   });
+
+  const uploadImages = (files) => {
+    const ImagesFormData = new FormData();
+    files.forEach((image, index) => {
+      ImagesFormData.append(`images[${index}]`, image);
+    });
+    storeImages(ImagesFormData)
+      .then((res) => {
+        setImagePaths(res.data.paths);
+        toast.success(res.data.message, { autoClose: 2000 });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     imageFormik.setFieldValue("images", files);
     const filePreviews = files.map((file) => URL.createObjectURL(file));
     setImagePreview(filePreviews);
+    uploadImages(files);
   };
 
   return (

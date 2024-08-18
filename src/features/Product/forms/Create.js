@@ -1,7 +1,6 @@
-
-export default function Create({formik  , categories}) {
+export default function Create({ formik, categories }) {
   return (
-    <form onSubmit={formik.handleSubmit} >
+    <form onSubmit={formik.handleSubmit}>
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
           Title
@@ -66,7 +65,7 @@ export default function Create({formik  , categories}) {
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         >
           <option value="">Select a category</option>
-          {categories.map((category) => (
+          {categories?.map((category) => (
             <option key={category.id} value={category.id}>
               {category.title}
             </option>

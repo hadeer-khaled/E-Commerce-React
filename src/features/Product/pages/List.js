@@ -4,6 +4,7 @@ import Paginator from "components/Paginator/Paginator";
 import ProductCard from "features/Product/components/Card";
 import Filter from "components/Filter/Filter";
 import Loader from "components/Loader/Loader";
+import { NavLink } from "react-router-dom";
 
 const List = () => {
   const [productsList, setProductsList] = useState([]);
@@ -54,11 +55,16 @@ const List = () => {
   return (
     <>
       <div className="container mx-auto">
-        <Filter
-          filter={filter}
-          handleFilterInput={handleFilterInput}
-          handleFilter={handleFilter}
-        ></Filter>
+        <div className="flex justify-between">
+          <Filter
+            filter={filter}
+            handleFilterInput={handleFilterInput}
+            handleFilter={handleFilter}
+          ></Filter>
+          <NavLink to="/products/create" className="btn btn-info">
+            Add a new Product
+          </NavLink>
+        </div>
 
         <div className="px-4 grid grid-cols-4 gap-4">
           {productsList.length !== 0 ? (

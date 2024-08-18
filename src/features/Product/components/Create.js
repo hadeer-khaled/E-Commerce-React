@@ -19,7 +19,7 @@ export default function Create() {
   useEffect(() => {
     getCategoies()
       .then((response) => {
-        setCategories(response.data.data.data);
+        setCategories(response.data.data);
       })
       .catch((error) => {
         console.error("Error fetching categories:", error);

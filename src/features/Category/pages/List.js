@@ -4,6 +4,7 @@ import Paginator from "components/Paginator/Paginator";
 import CategoryCard from "features/Category/components/Card";
 import Filter from "components/Filter/Filter";
 import Loader from "components/Loader/Loader";
+import { NavLink } from "react-router-dom";
 
 const List = () => {
   const [categoriesList, setCategoriesList] = useState([]);
@@ -57,11 +58,14 @@ const List = () => {
   return (
     <>
       <div className="container mx-auto">
-        <Filter
-          filter={filter}
-          handleFilterInput={handleFilterInput}
-          handleFilter={handleFilter}
-        ></Filter>
+        <div className="flex justify-between">
+          <Filter
+            filter={filter}
+            handleFilterInput={handleFilterInput}
+            handleFilter={handleFilter}
+          ></Filter>
+          <NavLink to="/categories/create" className="btn btn-info"> Add a new Category</NavLink>
+        </div>
 
         <div className="px-4 grid grid-cols-4 gap-4">
           {categoriesList.length !== 0 ? (

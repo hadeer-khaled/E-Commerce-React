@@ -4,6 +4,7 @@ export default function StoreImages({
   imagePreview,
   handleDeleteImages,
   imageRef,
+  downloadImage
 }) {
   return (
     <>
@@ -48,7 +49,9 @@ export default function StoreImages({
             >
               Delete Images
             </button>
-            <button type="button" className="btn">
+            <button type="button" 
+            className="btn"
+            onClick={downloadImage}>
               Download Images
             </button>
           </div>

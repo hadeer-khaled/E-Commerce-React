@@ -11,6 +11,7 @@ import StoreImages from "features/Product/forms/StoreImages";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
+import { saveAs } from "file-saver";
 export default function Create() {
   const imageRef = useRef(null);
   const [categories, setCategories] = useState([]);
@@ -86,6 +87,7 @@ export default function Create() {
     imageFormik.setFieldValue("images", files);
     const filePreviews = files.map((file) => URL.createObjectURL(file));
     setImagePreview(filePreviews);
+    console.log("filePreviews", filePreviews);
     uploadImages(files);
   };
   const handleDeleteImages = () => {
@@ -95,6 +97,11 @@ export default function Create() {
     if (imageRef.current) {
       imageRef.current.value = "";
     }
+  };
+  const downloadImage = () => {
+    imagePreview?.map((image, index) => {
+      saveAs(image, `image_${index}`);
+    });
   };
 
   return (
@@ -108,6 +115,7 @@ export default function Create() {
             imagePreview={imagePreview}
             handleDeleteImages={handleDeleteImages}
             imageRef={imageRef}
+            downloadImage={downloadImage}
           ></StoreImages>
           <CreateProductForm formik={formik} categories={categories} />
         </div>

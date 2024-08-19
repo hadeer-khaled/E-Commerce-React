@@ -7,8 +7,10 @@ import Loader from "components/Loader/Loader";
 import { NavLink } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from "AuthProvider";
 
 const List = () => {
+  const auth = useAuth();
   const [productsList, setProductsList] = useState([]);
   const [pagination, setPagination] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
@@ -74,9 +76,11 @@ const List = () => {
             handleFilterInput={handleFilterInput}
             handleFilter={handleFilter}
           ></Filter>
-          <NavLink to="/products/create" className="btn btn-info">
-            Add a new Product
-          </NavLink>
+          {auth.user.roles.includes("admin") && (
+            <NavLink to="/products/create" className="btn btn-info">
+              Add a new Product
+            </NavLink>
+          )}
         </div>
 
         <div className="px-4 grid grid-cols-4 gap-4">

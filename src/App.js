@@ -66,13 +66,13 @@ function App() {
                 <Route element={<AdminRoute />}>
                   <Route path="create" element={<CreateCategory />} />
                   <Route path=":id/update" element={<UpdateCategory />} />
+                  <Route path="create" element={<CreateProduct />} />
+                  <Route path=":id/update" element={<UpdateProduct />} />
                 </Route>
               </Route>
 
               <Route path="products">
                 <Route index element={<ListProduct />} />
-                <Route path="create" element={<CreateProduct />} />
-                <Route path=":id/update" element={<UpdateProduct />} />
                 <Route path=":id/show" element={<ShowProduct />} />
               </Route>
             </Route>

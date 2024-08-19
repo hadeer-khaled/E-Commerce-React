@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
+import { useAuth } from "AuthProvider";
 
 const ProductCard = ({ product, deleteHandler }) => {
+  const auth = useAuth();
   return (
     <>
       <div className="card bg-base-100  shadow-xl">
@@ -30,18 +32,22 @@ const ProductCard = ({ product, deleteHandler }) => {
             <NavLink className="btn" to={`/products/${product.id}/show`}>
               See details
             </NavLink>
-            <NavLink
-              className="btn btn-primary"
-              to={`/products/${product.id}/Update`}
-            >
-              Edit
-            </NavLink>
-            <button
-              className="btn btn-error"
-              onClick={() => deleteHandler(product.id)}
-            >
-              Delete
-            </button>
+            {auth.user.roles.includes("admin") && (
+              <>
+                <NavLink
+                  className="btn btn-primary"
+                  to={`/products/${product.id}/Update`}
+                >
+                  Edit
+                </NavLink>
+                <button
+                  className="btn btn-error"
+                  onClick={() => deleteHandler(product.id)}
+                >
+                  Delete
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>

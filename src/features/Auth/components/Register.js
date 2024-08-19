@@ -24,7 +24,7 @@ export default function Register() {
       formData.append("email", values.email);
       formData.append("password", values.password);
       formData.append("password_confirmation", values.password_confirmation);
-      register(values)
+      register(formData)
         .then((response) => {
           toast.success(response.data.message, { autoClose: 2000 });
           auth.loginAction(formData);

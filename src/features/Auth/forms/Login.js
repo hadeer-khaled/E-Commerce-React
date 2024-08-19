@@ -57,11 +57,11 @@ export default function Login({ formik }) {
       ) : (
         ""
       )}
-      <div className="flex justify-center items-baseline">
+      <div className="flex flex-col justify-center items-center">
         <button
           type="submit"
           disabled={!formik.isValid}
-          className="btn btn-outline btn-info mt-4 mr-2"
+          className="btn btn-outline btn-wide btn-info mt-4 mb-2 mr-2"
         >
           Login
         </button>
@@ -69,6 +69,12 @@ export default function Login({ formik }) {
           Don't have an account ?{" "}
           <NavLink to="/register" className="link link-primary">
             Register
+          </NavLink>
+        </p>
+        <p>
+          Forgot your password ?{" "}
+          <NavLink to="/forgot-password" className="link link-primary">
+            Forgot your password
           </NavLink>
         </p>
       </div>

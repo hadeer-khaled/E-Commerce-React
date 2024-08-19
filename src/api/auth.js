@@ -21,3 +21,20 @@ export const login = (formData) => {
 export const logout = (config) => {
   return axios_instance.post(`logout`, null, config);
 };
+
+export const resetPassword = (formData) => {
+  return axios_instance.post(`reset-password`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    skipToken: true,
+  });
+};
+export const forgotPassword = (formData) => {
+  return axios_instance.post(`forgot-password`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    skipToken: true,
+  });
+};

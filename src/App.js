@@ -28,6 +28,8 @@ import NotFound from "layouts/NotFound";
 import NotAuthorized from "layouts/NotAuthorized";
 import Visitor from "layouts/Visitor";
 import Home from "layouts/Home";
+import ResetPassword from "features/Auth/pages/ResetPassword";
+import ForgotPassword from "features/Auth/pages/ForgotPassword";
 
 const PrivateRoute = () => {
   const auth = useAuth();
@@ -53,6 +55,8 @@ function App() {
           <Route element={<Visitor />}>
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
           </Route>
 
           <Route element={<PrivateRoute />}>

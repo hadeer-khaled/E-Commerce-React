@@ -12,6 +12,8 @@ import StoreImages from "features/Product/forms/StoreImages";
 
 import StoreImagesSchema from "features/Product/schemas/StoreImages";
 import { toast } from "react-toastify";
+import { saveAs } from "file-saver";
+
 export default function Update() {
   const { id } = useParams();
   const imageRef = useRef(null);
@@ -116,6 +118,11 @@ export default function Update() {
       imageRef.current.value = "";
     }
   };
+  const downloadImage = () => {
+    imagePreview?.map((image, index) => {
+      saveAs(image, `image_${index}`);
+    });
+  };
 
   return (
     <>
@@ -144,6 +151,7 @@ export default function Update() {
           imagePreview={imagePreview}
           handleDeleteImages={handleDeleteImages}
           imageRef={imageRef}
+          downloadImage={downloadImage}
         ></StoreImages>
         <UpdateProductForm formik={formik} categories={categories} />
       </div>

@@ -28,7 +28,6 @@ const Show = () => {
   const deleteHandler = (category_id) => {
     deleteCategoryById(category_id)
       .then((res) => {
-        console.log(res.data.message);
         navigator("/categories");
       })
       .catch((error) => {

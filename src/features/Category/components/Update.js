@@ -44,9 +44,9 @@ export default function UpdateCategoryComponent() {
       formData.append("id", id);
       formData.append("title", values.title);
       formData.append("_method", "PUT");
-      formData.forEach((value, key) => {
-        console.log(key, " : ", value);
-      });
+      // formData.forEach((value, key) => {
+      //   console.log(key, " : ", value);
+      // });
       updateCategoryById(id, formData)
         .then((response) => {
           toast.success(response.data.message, { autoClose: 1500 });

@@ -78,7 +78,7 @@ export default function Create() {
         toast.success(res.data.message, { autoClose: 2000 });
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err.response.data.message, { autoClose: 2000 });
       });
   };
 
@@ -87,7 +87,6 @@ export default function Create() {
     imageFormik.setFieldValue("images", files);
     const filePreviews = files.map((file) => URL.createObjectURL(file));
     setImagePreview(filePreviews);
-    console.log("filePreviews", filePreviews);
     uploadImages(files);
   };
   const handleDeleteImages = () => {

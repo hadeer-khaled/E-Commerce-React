@@ -5,7 +5,7 @@ export const register = (formData) => {
     headers: {
       "Content-Type": "multipart/form-data",
     },
-    skipInterceptor: true,
+    skipToken: true,
   });
 };
 
@@ -14,7 +14,7 @@ export const login = (formData) => {
     headers: {
       "Content-Type": "multipart/form-data",
     },
-    skipInterceptor: true,
+    skipToken: true,
   });
 };
 

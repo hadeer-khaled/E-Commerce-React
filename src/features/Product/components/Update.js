@@ -57,7 +57,6 @@ export default function Update() {
     },
     validationSchema: CreateProductSchema,
     onSubmit: (values) => {
-      console.log(values);
       const formData = new FormData();
       formData.append("title", values.title);
       formData.append("price", values.price);
@@ -70,7 +69,6 @@ export default function Update() {
 
       updateProductById(id, formData)
         .then((response) => {
-          console.log("Product created successfully:", response.data.data);
           toast.success(response.data.message, { autoClose: 1500 });
           setTimeout(() => {
             navigate("/products");
@@ -97,10 +95,9 @@ export default function Update() {
       .then((res) => {
         setNewImagePaths(res.data.paths);
         toast.success(res.data.message, { autoClose: 2000 });
-        console.log(res.data.paths);
       })
       .catch((err) => {
-        console.log(err);
+        toast.success(err.response.data.message, { autoClose: 2000 });
       });
   };
   const handleImageChange = (e) => {

@@ -12,7 +12,6 @@ export default function Show() {
     const fetchProduct = async () => {
       try {
         const response = await getProductById(id);
-        console.log(response.data.data);
         setProduct(response.data.data);
       } catch (error) {
         console.error("Error fetching product:", error);

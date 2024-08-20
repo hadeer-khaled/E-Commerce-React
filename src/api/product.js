@@ -1,6 +1,7 @@
 import axios_instance from "./config";
 
 export const getProducts = (params = {}) => {
+  console.log("params",params);
   return axios_instance.get(`products`, {
     params: params,
   });

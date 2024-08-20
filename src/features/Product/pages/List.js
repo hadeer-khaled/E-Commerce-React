@@ -16,14 +16,14 @@ const List = () => {
   const [pagination, setPagination] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(4);
-  const [filter, setFilter] = useState(null);
+  const [filter, setFilter] = useState("");
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
-    fetchProducts(currentPage, perPage, filter , selectedCategory);
-  }, [currentPage, perPage ,selectedCategory]);
+    fetchProducts(currentPage, perPage, selectedCategory, filter);
+  }, [currentPage, perPage, selectedCategory]);
 
   useEffect(() => {
     getCategoies()
@@ -35,8 +35,13 @@ const List = () => {
       });
   }, []);
 
-  const fetchProducts = (currentPage, perPage, filter ,selectedCategory) => {
-    getProducts({ page: currentPage, perPage: perPage, search: filter , category:selectedCategory })
+  const fetchProducts = (currentPage, perPage, selectedCategory, filter) => {
+    getProducts({
+      page: currentPage,
+      perPage: perPage,
+      search: filter,
+      category: selectedCategory,
+    })
       .then((response) => {
         setProductsList(response.data.data);
         setPagination(response.data);
@@ -61,24 +66,33 @@ const List = () => {
   };
 
   const handleFilter = (ToClear = false) => {
-    ToClear
-      ? fetchProducts(currentPage, perPage , selectedCategory)
-      : fetchProducts(currentPage, perPage, filter?.toLowerCase() , selectedCategory);
+    if (ToClear) {
+      setFilter("");
+      console.log("selectedCategory", selectedCategory);
+      fetchProducts(currentPage, perPage, selectedCategory);
+    } else {
+      fetchProducts(
+        currentPage,
+        perPage,
+        selectedCategory,
+        filter?.toLowerCase()
+      );
+    }
   };
 
   const deleteHandler = (product_id) => {
     deleteProductById(product_id)
       .then((res) => {
-        fetchProducts(currentPage, perPage, filter , selectedCategory);
+        fetchProducts(currentPage, perPage, selectedCategory, filter);
         toast.success(res.data.message, { autoClose: 2000 });
       })
       .catch((error) => {
         console.error("Error deleting product:", error);
       });
   };
-  const handleCategoryChange = (e)=>{
-    setSelectedCategory(e.target.value)
-  }
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
+  };
 
   if (loading) {
     return <Loader />;

@@ -97,12 +97,33 @@ export default function Create() {
       imageRef.current.value = "";
     }
   };
-  const downloadImage = () => {
+  const handleDeleteEachImage = (index) => {
+    const updatedImages = [...imageFormik.values.images];
+    updatedImages.splice(index, 1);
+    imageFormik.setFieldValue("images", updatedImages);
+
+    const updatedImagePreviews = [...imagePreview];
+    updatedImagePreviews.splice(index, 1);
+    setImagePreview(updatedImagePreviews);
+
+    const updatedImagePaths = [...imagePaths];
+    updatedImagePaths.splice(index, 1);
+    setImagePaths(updatedImagePaths);
+
+    if (updatedImagePreviews.length === 0 && imageRef.current) {
+      imageRef.current.value = "";
+    }
+  };
+
+  const handleDownloadImages = () => {
     imagePreview?.map((image, index) => {
       saveAs(image, `image_${index}`);
     });
   };
 
+  const handleDownloadEachImage = (index) => {
+    saveAs(imagePreview[index], `image_${index}`);
+  };
   return (
     <>
       <div className="card bg-base-100  shadow-xl p-4">
@@ -112,9 +133,11 @@ export default function Create() {
             imageFormik={imageFormik}
             handleImageChange={handleImageChange}
             imagePreview={imagePreview}
-            handleDeleteImages={handleDeleteImages}
             imageRef={imageRef}
-            downloadImage={downloadImage}
+            handleDownloadEachImage={handleDownloadEachImage}
+            handleDownloadImages={handleDownloadImages}
+            handleDeleteEachImage={handleDeleteEachImage}
+            handleDeleteImages={handleDeleteImages}
           ></StoreImages>
           <CreateProductForm formik={formik} categories={categories} />
         </div>

@@ -5,12 +5,13 @@ import { useFormik } from "formik";
 import { resetPassword } from "api/auth";
 import { useNavigate, useSearchParams } from "react-router-dom";
 export default function ResetPassword() {
-  const [searchParams, ] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
   const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
+      email: "",
       password: "",
       password_confirmation: "",
     },
@@ -18,7 +19,7 @@ export default function ResetPassword() {
     onSubmit: (values, actions) => {
       const formData = new FormData();
       formData.append("token", token);
-      // formData.append("email", "hadeer.khaled.elmalah@gmail.com");
+      formData.append("email", values.email);
       formData.append("password", values.password);
       formData.append("password_confirmation", values.password_confirmation);
       resetPassword(formData)

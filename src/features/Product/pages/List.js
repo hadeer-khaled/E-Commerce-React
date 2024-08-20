@@ -8,6 +8,7 @@ import { NavLink } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "AuthProvider";
+import { getCategoies } from "api/category";
 
 const List = () => {
   const auth = useAuth();
@@ -17,13 +18,25 @@ const List = () => {
   const [perPage, setPerPage] = useState(4);
   const [filter, setFilter] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
-    fetchProducts(currentPage, perPage, filter);
-  }, [currentPage, perPage]);
+    fetchProducts(currentPage, perPage, filter , selectedCategory);
+  }, [currentPage, perPage ,selectedCategory]);
 
-  const fetchProducts = (currentPage, perPage, filter) => {
-    getProducts({ page: currentPage, perPage: perPage, search: filter })
+  useEffect(() => {
+    getCategoies()
+      .then((response) => {
+        setCategories(response.data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching categories:", error);
+      });
+  }, []);
+
+  const fetchProducts = (currentPage, perPage, filter ,selectedCategory) => {
+    getProducts({ page: currentPage, perPage: perPage, search: filter , category:selectedCategory })
       .then((response) => {
         setProductsList(response.data.data);
         setPagination(response.data);
@@ -49,20 +62,23 @@ const List = () => {
 
   const handleFilter = (ToClear = false) => {
     ToClear
-      ? fetchProducts(currentPage, perPage)
-      : fetchProducts(currentPage, perPage, filter?.toLowerCase());
+      ? fetchProducts(currentPage, perPage , selectedCategory)
+      : fetchProducts(currentPage, perPage, filter?.toLowerCase() , selectedCategory);
   };
 
   const deleteHandler = (product_id) => {
     deleteProductById(product_id)
       .then((res) => {
-        fetchProducts(currentPage, perPage, filter);
+        fetchProducts(currentPage, perPage, filter , selectedCategory);
         toast.success(res.data.message, { autoClose: 2000 });
       })
       .catch((error) => {
         console.error("Error deleting product:", error);
       });
   };
+  const handleCategoryChange = (e)=>{
+    setSelectedCategory(e.target.value)
+  }
 
   if (loading) {
     return <Loader />;
@@ -76,6 +92,19 @@ const List = () => {
             handleFilterInput={handleFilterInput}
             handleFilter={handleFilter}
           ></Filter>
+          <select
+            name="category_id"
+            onChange={handleCategoryChange}
+            value={selectedCategory}
+            className="select select-bordered w-full max-w-xs"
+          >
+            <option value="">Select a category</option>
+            {categories?.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.title}
+              </option>
+            ))}
+          </select>
           {auth.user.roles.includes("admin") && (
             <NavLink to="/products/create" className="btn btn-info">
               Add a new Product

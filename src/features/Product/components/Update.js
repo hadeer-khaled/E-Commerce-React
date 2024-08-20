@@ -115,10 +115,30 @@ export default function Update() {
       imageRef.current.value = "";
     }
   };
-  const downloadImage = () => {
+  const handleDeleteEachImage = (index) => {
+    const updatedImages = [...imageFormik.values.images];
+    updatedImages.splice(index, 1);
+    imageFormik.setFieldValue("images", updatedImages);
+
+    const updatedImagePreviews = [...imagePreview];
+    updatedImagePreviews.splice(index, 1);
+    setImagePreview(updatedImagePreviews);
+
+    const updatedImagePaths = [...newImagePaths];
+    updatedImagePaths.splice(index, 1);
+    setNewImagePaths(updatedImagePaths);
+
+    if (updatedImagePreviews.length === 0 && imageRef.current) {
+      imageRef.current.value = "";
+    }
+  };
+  const handleDownloadImages = () => {
     imagePreview?.map((image, index) => {
       saveAs(image, `image_${index}`);
     });
+  };
+  const handleDownloadEachImage = (index) => {
+    saveAs(imagePreview[index], `image_${index}`);
   };
 
   return (
@@ -146,9 +166,11 @@ export default function Update() {
           imageFormik={imageFormik}
           handleImageChange={handleImageChange}
           imagePreview={imagePreview}
-          handleDeleteImages={handleDeleteImages}
           imageRef={imageRef}
-          downloadImage={downloadImage}
+          handleDownloadEachImage={handleDownloadEachImage}
+          handleDownloadImages={handleDownloadImages}
+          handleDeleteEachImage={handleDeleteEachImage}
+          handleDeleteImages={handleDeleteImages}
         ></StoreImages>
         <UpdateProductForm formik={formik} categories={categories} />
       </div>

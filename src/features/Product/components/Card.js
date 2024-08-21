@@ -12,7 +12,7 @@ const ProductCard = ({ product, deleteHandler }) => {
               <img
                 src={
                   product?.images?.length != 0
-                    ? product.images[0]
+                    ? product.images[0].url
                     : "https://www.naggl.org/global_graphics/default-store-350x350.jpg"
                 }
                 alt="product"

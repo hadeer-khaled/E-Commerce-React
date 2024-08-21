@@ -47,7 +47,7 @@ export default function Show() {
                 className="carousel-item w-full"
               >
                 <img
-                  src={image}
+                  src={image.url}
                   alt={`Product Image ${index + 1}`}
                   className="w-full"
                 />

@@ -3,7 +3,8 @@ import { FaDownload } from "react-icons/fa6";
 export default function StoreImages({
   imageFormik,
   handleImageChange,
-  imagePreview,
+  // imagePreview,
+  images,
   imageRef,
   handleDownloadImages,
   handleDownloadEachImage,
@@ -31,13 +32,13 @@ export default function StoreImages({
             />
 
             <div className="flex flex-wrap mt-4 space-x-4">
-              {imagePreview.map((path, index) => (
+              {images.map((image, index) => (
                 <div key={index} className="relative w-24 h-24">
                   <button
                     type="button"
                     className="btn btn-circle btn-sm absolute top-1 right-1 z-10"
                     onClick={() => {
-                      handleDeleteEachImage(index);
+                      handleDeleteImages(index);
                     }}
                   >
                     <svg
@@ -66,7 +67,7 @@ export default function StoreImages({
                   </button>
 
                   <img
-                    src={path}
+                    src={image.url}
                     alt={`Preview ${index + 1}`}
                     className="w-full h-full object-cover border rounded"
                   />
@@ -86,7 +87,11 @@ export default function StoreImages({
             >
               Delete all Images
             </button>
-            <button type="button" className="btn" onClick={handleDownloadImages}>
+            <button
+              type="button"
+              className="btn"
+              onClick={handleDownloadImages}
+            >
               Download all Images
             </button>
           </div>

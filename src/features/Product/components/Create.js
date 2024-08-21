@@ -15,8 +15,7 @@ import { saveAs } from "file-saver";
 export default function Create() {
   const imageRef = useRef(null);
   const [categories, setCategories] = useState([]);
-  const [imagePaths, setImagePaths] = useState([]);
-  const [imagePreview, setImagePreview] = useState([]);
+  const [images, setImages] = useState([]);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -25,7 +24,7 @@ export default function Create() {
         setCategories(response.data.data);
       })
       .catch((error) => {
-        console.error("Error fetching categories:", error);
+        toast.error(error.response.data.message, { autoClose: 2000 });
       });
   }, []);
 
@@ -35,20 +34,21 @@ export default function Create() {
       price: "",
       description: "",
       category_id: "",
-      paths: [],
     },
     validationSchema: CreateProductSchema,
     onSubmit: (values) => {
-      const formData = new FormData();
-      formData.append("title", values.title);
-      formData.append("price", values.price);
-      formData.append("description", values.description);
-      formData.append("category_id", values.category_id);
-      imagePaths.forEach((imagePath, index) => {
-        formData.append(`paths[${index}]`, imagePath);
-      });
-
-      createProduct(formData)
+      const productData = {
+        title: values.title,
+        description: values.description,
+        price: values.price,
+        category_id: values.category_id,
+        images: images.map((imagePath) => ({
+          original_filename: imagePath.original_filename,
+          storage_filename: imagePath.storage_filename,
+          url: imagePath.url,
+        })),
+      };
+      createProduct(productData)
         .then((response) => {
           toast.success(response.data.message, { autoClose: 1500 });
           setTimeout(() => {
@@ -74,7 +74,7 @@ export default function Create() {
     });
     storeImages(ImagesFormData)
       .then((res) => {
-        setImagePaths(res.data.paths);
+        setImages(res.data.images);
         toast.success(res.data.message, { autoClose: 2000 });
       })
       .catch((err) => {
@@ -85,45 +85,41 @@ export default function Create() {
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     imageFormik.setFieldValue("images", files);
-    const filePreviews = files.map((file) => URL.createObjectURL(file));
-    setImagePreview(filePreviews);
     uploadImages(files);
   };
-  const handleDeleteImages = () => {
-    imageFormik.setFieldValue("images", []);
-    setImagePreview([]);
-    setImagePaths([]);
-    if (imageRef.current) {
-      imageRef.current.value = "";
-    }
-  };
-  const handleDeleteEachImage = (index) => {
-    const updatedImages = [...imageFormik.values.images];
-    updatedImages.splice(index, 1);
-    imageFormik.setFieldValue("images", updatedImages);
+  const handleDeleteImages = (index) => {
+    if (!index) {
+      imageFormik.setFieldValue("images", []);
+      setImages([]);
+      if (imageRef.current) {
+        imageRef.current.value = "";
+      }
+    } 
+    else {
+      const updatedImages = [...imageFormik.values.images];
+      updatedImages.splice(index, 1);
+      imageFormik.setFieldValue("images", updatedImages);
 
-    const updatedImagePreviews = [...imagePreview];
-    updatedImagePreviews.splice(index, 1);
-    setImagePreview(updatedImagePreviews);
+      const updatedImagePaths = [...images];
+      updatedImagePaths.splice(index, 1);
+      setImages(updatedImagePaths);
 
-    const updatedImagePaths = [...imagePaths];
-    updatedImagePaths.splice(index, 1);
-    setImagePaths(updatedImagePaths);
-
-    if (updatedImagePreviews.length === 0 && imageRef.current) {
-      imageRef.current.value = "";
+      if (updatedImagePaths.length === 0 && imageRef.current) {
+        imageRef.current.value = "";
+      }
     }
   };
 
   const handleDownloadImages = () => {
-    imagePreview?.map((image, index) => {
-      saveAs(image, `image_${index}`);
-    });
+    // images?.map((image) => {
+    //   saveAs(image.url, `${image.url}`);
+    // });
   };
 
   const handleDownloadEachImage = (index) => {
-    saveAs(imagePreview[index], `image_${index}`);
+    saveAs(images[index].url, `${images[index].original_filename}`);
   };
+
   return (
     <>
       <div className="card bg-base-100  shadow-xl p-4">
@@ -132,11 +128,10 @@ export default function Create() {
           <StoreImages
             imageFormik={imageFormik}
             handleImageChange={handleImageChange}
-            imagePreview={imagePreview}
+            images={images}
             imageRef={imageRef}
             handleDownloadEachImage={handleDownloadEachImage}
             handleDownloadImages={handleDownloadImages}
-            handleDeleteEachImage={handleDeleteEachImage}
             handleDeleteImages={handleDeleteImages}
           ></StoreImages>
           <CreateProductForm formik={formik} categories={categories} />

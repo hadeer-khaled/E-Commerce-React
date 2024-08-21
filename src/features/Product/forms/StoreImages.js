@@ -1,9 +1,7 @@
 import { FaDownload } from "react-icons/fa6";
 
 export default function StoreImages({
-  imageFormik,
   handleImageChange,
-  // imagePreview,
   images,
   imageRef,
   handleDownloadImages,
@@ -13,7 +11,7 @@ export default function StoreImages({
 }) {
   return (
     <>
-      <form onSubmit={imageFormik.handleSubmit}>
+      <form >
         <div className="">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Upload Product Images
@@ -26,9 +24,7 @@ export default function StoreImages({
               ref={imageRef}
               multiple
               onChange={handleImageChange}
-              className={`shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                imageFormik.errors.images ? "border-red-500" : ""
-              }`}
+              className={`shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
             />
 
             <div className="flex flex-wrap mt-4 space-x-4">
@@ -75,11 +71,6 @@ export default function StoreImages({
               ))}
             </div>
 
-            {imageFormik.errors.images && (
-              <p className="text-red-500 text-xs italic mt-2">
-                You must select at least 1 image before upload it
-              </p>
-            )}
             <button
               type="button"
               className="btn btn-error"

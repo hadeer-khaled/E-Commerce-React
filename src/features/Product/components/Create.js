@@ -61,12 +61,6 @@ export default function Create() {
     },
   });
 
-  const imageFormik = useFormik({
-    initialValues: {
-      images: [],
-    },
-  });
-
   const uploadImages = (files) => {
     const ImagesFormData = new FormData();
     files.forEach((image, index) => {
@@ -84,27 +78,20 @@ export default function Create() {
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    imageFormik.setFieldValue("images", files);
     uploadImages(files);
   };
   const handleDeleteImages = (index) => {
     if (!index) {
-      imageFormik.setFieldValue("images", []);
       setImages([]);
       if (imageRef.current) {
         imageRef.current.value = "";
       }
-    } 
-    else {
-      const updatedImages = [...imageFormik.values.images];
-      updatedImages.splice(index, 1);
-      imageFormik.setFieldValue("images", updatedImages);
+    } else {
+      const updatedImage = [...images];
+      updatedImage.splice(index, 1);
+      setImages(updatedImage);
 
-      const updatedImagePaths = [...images];
-      updatedImagePaths.splice(index, 1);
-      setImages(updatedImagePaths);
-
-      if (updatedImagePaths.length === 0 && imageRef.current) {
+      if (updatedImage.length === 0 && imageRef.current) {
         imageRef.current.value = "";
       }
     }
@@ -126,7 +113,6 @@ export default function Create() {
         <div className="card-body">
           <h2 className="card-title">Create Product</h2>
           <StoreImages
-            imageFormik={imageFormik}
             handleImageChange={handleImageChange}
             images={images}
             imageRef={imageRef}

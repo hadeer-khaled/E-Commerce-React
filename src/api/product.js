@@ -13,12 +13,8 @@ export const getProductById = (product_id) => {
 export const createProduct = (data) => {
   return axios_instance.post(`products`, data);
 };
-export const updateProductById = (product_id, formData) => {
-  return axios_instance.post(`products/${product_id}`, formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
+export const updateProductById = (product_id, data) => {
+  return axios_instance.post(`products/${product_id}`, data );
 };
 
 export const deleteProductById = (product_id) => {

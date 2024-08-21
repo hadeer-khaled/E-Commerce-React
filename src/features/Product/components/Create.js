@@ -80,8 +80,8 @@ export default function Create() {
     const files = Array.from(e.target.files);
     uploadImages(files);
   };
-  const handleDeleteImages = (index) => {
-    if (!index) {
+  const handleDeleteImages = (e, index) => {
+    if (index === null || index === undefined) {
       setImages([]);
       if (imageRef.current) {
         imageRef.current.value = "";

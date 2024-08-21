@@ -28,7 +28,7 @@ export default function StoreImages({
             />
 
             <div className="flex flex-wrap mt-4 space-x-4">
-              {images.map((image, index) => (
+              {images?.map((image, index) => (
                 <div key={index} className="relative w-24 h-24">
                   <button
                     type="button"

@@ -29,7 +29,7 @@ const CategoryCard = ({ category, deleteHandler }) => {
               <>
                 <NavLink
                   className="btn btn-primary"
-                  to={`${category.id}/Update`}
+                  to={`${category.id}/edit`}
                 >
                   Edit
                 </NavLink>

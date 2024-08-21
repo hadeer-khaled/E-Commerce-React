@@ -69,7 +69,7 @@ function App() {
 
                 <Route element={<AdminRoute />}>
                   <Route path="create" element={<CreateCategory />} />
-                  <Route path=":id/update" element={<UpdateCategory />} />
+                  <Route path=":id/edit" element={<UpdateCategory />} />
                 </Route>
               </Route>
 
@@ -77,7 +77,7 @@ function App() {
                 <Route index element={<ListProduct />} />
                 <Route path=":id/show" element={<ShowProduct />} />
                 <Route element={<AdminRoute />}>
-                  <Route path=":id/update" element={<UpdateProduct />} />
+                  <Route path=":id/edit" element={<UpdateProduct />} />
                   <Route path="create" element={<CreateProduct />} />
                 </Route>
               </Route>

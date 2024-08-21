@@ -36,7 +36,7 @@ const ProductCard = ({ product, deleteHandler }) => {
               <>
                 <NavLink
                   className="btn btn-primary"
-                  to={`/products/${product.id}/Update`}
+                  to={`/products/${product.id}/edit`}
                 >
                   Edit
                 </NavLink>

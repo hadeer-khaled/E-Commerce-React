@@ -28,6 +28,14 @@ const Navbar = () => {
           >
             Products
           </NavLink>
+          {auth.user.roles.includes("admin") && (
+            <NavLink
+              className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700"
+              to={"/users"}
+            >
+              Users
+            </NavLink>
+          )}
         </div>
       </div>
       <div className="flex space-x-4 ml-auto">

@@ -22,6 +22,10 @@ import CreateProduct from "features/Product/pages/Create";
 import UpdateProduct from "features/Product/pages/Update";
 import ShowProduct from "features/Product/pages/Show";
 
+import ListUser from "features/User/pages/List";
+import CreateUser from "features/User/pages/Create";
+import UpdateUser from "features/User/pages/Update";
+
 /* Layouts */
 import Dashboard from "layouts/Dashboard";
 import NotFound from "layouts/NotFound";
@@ -79,6 +83,14 @@ function App() {
                 <Route element={<AdminRoute />}>
                   <Route path=":id/edit" element={<UpdateProduct />} />
                   <Route path="create" element={<CreateProduct />} />
+                </Route>
+              </Route>
+
+              <Route element={<AdminRoute />}>
+                <Route path="users">
+                  <Route index element={<ListUser />} />
+                  <Route path=":id/edit" element={<UpdateUser />} />
+                  <Route path="create" element={<CreateUser />} />
                 </Route>
               </Route>
             </Route>

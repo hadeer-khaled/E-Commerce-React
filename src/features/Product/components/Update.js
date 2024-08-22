@@ -160,7 +160,7 @@ export default function Update() {
     // });
   };
   const handleDownloadEachImage = (index) => {
-    // saveAs(imagePreview[index], `image_${index}`);
+    // saveAs(images[index], `image_${index}`);
   };
 
   return (

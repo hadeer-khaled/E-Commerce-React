@@ -30,8 +30,8 @@ export default function Show() {
   if (!product) {
     return <div>Error: Product not found</div>;
   }
-  const images = product.images && product.images.length > 0 ? product.images : ['https://gebelesebeti.ge/front/asset/img/default-product.png'];
-
+  const images = product.images && product.images.length > 0 ? product.images : [{url:'https://gebelesebeti.ge/front/asset/img/default-product.png'}];
+console.log("images" , images)
   return (
     <div className="container m-auto">
       <div className="card card-compact bg-base-100 w-96 shadow-xl">

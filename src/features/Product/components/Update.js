@@ -88,8 +88,7 @@ export default function Update() {
     });
 
     const productData = {
-      _method: "PUT",
-      product: {
+      productData: {
         id: id,
         title: values.title,
         description: values.description,

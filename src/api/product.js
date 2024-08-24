@@ -14,7 +14,7 @@ export const createProduct = (data) => {
   return axios_instance.post(`products`, data);
 };
 export const updateProductById = (product_id, data) => {
-  return axios_instance.post(`products/${product_id}`, data );
+  return axios_instance.put(`products/${product_id}`, data );
 };
 
 export const deleteProductById = (product_id) => {

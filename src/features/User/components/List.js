@@ -9,6 +9,7 @@ import { NavLink } from "react-router-dom";
 export default function List() {
   const [usersList, setUsersList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [userIdToBeDeleted, setUserIdToBeDeleted] = useState(null);
 
   useEffect(() => {
     fetchUsers();
@@ -25,6 +26,7 @@ export default function List() {
       });
   };
   const handleDelete = (user_id) => {
+    setUserIdToBeDeleted(user_id);
     deleteUserById(user_id)
       .then((response) => {
         toast.success(response.data.message, { autoClose: 2000 });
@@ -32,6 +34,9 @@ export default function List() {
       })
       .catch((error) => {
         toast.error(error.response.data.message, { autoClose: 2000 });
+      })
+      .finally(() => {
+        setUserIdToBeDeleted(null);
       });
   };
 
@@ -45,7 +50,11 @@ export default function List() {
           Add New User
         </NavLink>
       </div>
-      <UserTable usersList={usersList} handleDelete={handleDelete} />
+      <UserTable
+        usersList={usersList}
+        handleDelete={handleDelete}
+        userIdToBeDeleted={userIdToBeDeleted}
+      />
     </>
   );
 }

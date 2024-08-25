@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-export default function Table({ usersList, handleDelete }) {
+export default function Table({ usersList, handleDelete, userIdToBeDeleted }) {
   return (
     <>
       <div className="overflow-x-auto">
@@ -19,6 +19,8 @@ export default function Table({ usersList, handleDelete }) {
             </thead>
             <tbody>
               {usersList?.map((user, index) => {
+                const isDeleting = userIdToBeDeleted === user.id;
+
                 return (
                   <tr key={index}>
                     <td>{user.id}</td>
@@ -31,6 +33,7 @@ export default function Table({ usersList, handleDelete }) {
                         onClick={() => {
                           handleDelete(user.id);
                         }}
+                        disabled={isDeleting}
                       >
                         Delete
                       </button>

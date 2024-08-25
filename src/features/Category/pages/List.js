@@ -18,6 +18,7 @@ const List = () => {
   const [perPage, setPerPage] = useState(4);
   const [filter, setFilter] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [categoryToBeDeleted, setCategoryToBeDeleted] = useState(null);
 
   useEffect(() => {
     fetchCategories(currentPage, perPage, filter);
@@ -57,6 +58,7 @@ const List = () => {
     }
   };
   const deleteHandler = (category_id) => {
+    setCategoryToBeDeleted(category_id);
     deleteCategoryById(category_id)
       .then((res) => {
         fetchCategories(currentPage, perPage, filter);
@@ -64,6 +66,9 @@ const List = () => {
       })
       .catch((error) => {
         console.error("Error deleting category:", error);
+      })
+      .finally(() => {
+        setCategoryToBeDeleted(null);
       });
   };
 
@@ -95,6 +100,7 @@ const List = () => {
                   category={category}
                   deleteHandler={deleteHandler}
                   key={`category_${category.id}`}
+                  categoryToBeDeleted={categoryToBeDeleted}
                 ></CategoryCard>
               );
             })

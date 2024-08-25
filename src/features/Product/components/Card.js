@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useAuth } from "AuthProvider";
 
-const ProductCard = ({ product, deleteHandler }) => {
+const ProductCard = ({ product, deleteHandler, productToBeDeleted }) => {
   const auth = useAuth();
   return (
     <>
@@ -43,6 +43,7 @@ const ProductCard = ({ product, deleteHandler }) => {
                 <button
                   className="btn btn-error"
                   onClick={() => deleteHandler(product.id)}
+                  disabled={productToBeDeleted === product.id}
                 >
                   Delete
                 </button>

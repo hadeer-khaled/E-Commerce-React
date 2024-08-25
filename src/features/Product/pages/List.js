@@ -20,6 +20,7 @@ const List = () => {
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [productToBeDeleted, setProductToBeDeleted] = useState(null);
 
   useEffect(() => {
     fetchProducts(currentPage, perPage, selectedCategory, filter);
@@ -81,6 +82,7 @@ const List = () => {
   };
 
   const deleteHandler = (product_id) => {
+    setProductToBeDeleted(product_id);
     deleteProductById(product_id)
       .then((res) => {
         fetchProducts(currentPage, perPage, selectedCategory, filter);
@@ -88,6 +90,9 @@ const List = () => {
       })
       .catch((error) => {
         console.error("Error deleting product:", error);
+      })
+      .finally(() => {
+        setProductToBeDeleted(null);
       });
   };
   const handleCategoryChange = (e) => {
@@ -134,6 +139,7 @@ const List = () => {
                   product={product}
                   deleteHandler={deleteHandler}
                   key={`product_${product.id}`}
+                  productToBeDeleted={productToBeDeleted}
                 ></ProductCard>
               );
             })

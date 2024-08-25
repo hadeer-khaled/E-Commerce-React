@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useAuth } from "AuthProvider";
 
-const CategoryCard = ({ category, deleteHandler }) => {
+const CategoryCard = ({ category, deleteHandler, categoryToBeDeleted }) => {
   const auth = useAuth();
 
   return (
@@ -27,15 +27,13 @@ const CategoryCard = ({ category, deleteHandler }) => {
             </NavLink>
             {auth.user.roles.includes("admin") && (
               <>
-                <NavLink
-                  className="btn btn-primary"
-                  to={`${category.id}/edit`}
-                >
+                <NavLink className="btn btn-primary" to={`${category.id}/edit`}>
                   Edit
                 </NavLink>
                 <button
                   className="btn btn-error"
                   onClick={() => deleteHandler(category.id)}
+                  disabled={categoryToBeDeleted === category.id}
                 >
                   Delete
                 </button>

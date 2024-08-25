@@ -60,15 +60,14 @@ export default function Create({ formik, roles, isSubmitting }) {
           name="roles"
           value={formik.values.roles}
           onChange={(option) => formik.setFieldValue("roles", option)}
-          onBlur={formik.handleBlur}
+          // onBlur={formik.handleBlur}
+          onBlur={() => formik.setFieldTouched("roles", true)}
           options={roles}
           isMulti
         />
-        {formik.errors.roles ? (
+        {formik.errors.roles && formik.touched.roles ? (
           <p className="text-red-500">{formik.errors.roles}</p>
-        ) : (
-          ""
-        )}
+        ) : null}
 
         <div className="flex justify-center items-baseline">
           <button

@@ -53,7 +53,7 @@ const AuthProvider = ({ children }) => {
       });
   };
 
-  const registerAction = (data) => {
+  const registerAction = (data , setIsSubmitting) => {
     register(data)
       .then((res) => {
         setUser(res.data.data);
@@ -67,9 +67,8 @@ const AuthProvider = ({ children }) => {
         return;
       })
       .catch((error) => {
-        // if (error.response.status == 401) {
           toast.error(error.response.data.message, { autoClose: 2000 });
-        // }
+          setIsSubmitting(false)
       });
   };
 

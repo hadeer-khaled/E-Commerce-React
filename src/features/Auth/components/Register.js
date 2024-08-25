@@ -21,7 +21,7 @@ export default function Register() {
 
     onSubmit: (values, actions) => {
       setIsSubmitting(true);
-      auth.registerAction(values);
+      auth.registerAction(values , setIsSubmitting);
     },
   });
   return (

@@ -1,18 +1,36 @@
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createUser } from "api/user";
+import { getRoles } from "api/role";
 import UserCreateForm from "features/User/forms/Create";
 import createUserSchema from "features/User/schemas/Create";
 
 export default function Create() {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const roles = [
-    { value: "user", label: "User" },
-    { value: "admin", label: "Admin" },
-  ];
+  const [roles, setRoles] = useState([]);
+  // const roles = [
+  //   { value: "user", label: "User" },
+  //   { value: "admin", label: "Admin" },
+  // ];
+
+  useEffect(() => {
+    getRoles()
+      .then((res) => {
+        setRoles(
+          res.data.data.map((role) => ({
+            value: role,
+            label: role,
+          }))
+        );
+      })
+      .catch((error) => {
+        toast.error("Error fetching roles:" , 1500);
+      });
+  }, []);
+
   const formik = useFormik({
     initialValues: {
       username: "",

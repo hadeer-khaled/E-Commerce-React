@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useFormik } from "formik";
 
 import { getUserById, updateUserById } from "api/user";
+import { getRoles } from "api/role";
+
 import UserUpdateForm from "features/User/forms/Update";
 import UpdateUserSchema from "features/User/schemas/Update";
 import { useEffect, useState } from "react";
@@ -11,12 +13,22 @@ export default function Create() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [roles, setRoles] = useState([]);
 
-  const roles = [
-    { value: "user", label: "User" },
-    { value: "admin", label: "Admin" },
-  ];
-
+  useEffect(() => {
+    getRoles()
+      .then((res) => {
+        setRoles(
+          res.data.data.map((role) => ({
+            value: role,
+            label: role,
+          }))
+        );
+      })
+      .catch((error) => {
+        toast.error("Error fetching roles:", 1500);
+      });
+  }, []);
   const formik = useFormik({
     initialValues: {
       username: "",

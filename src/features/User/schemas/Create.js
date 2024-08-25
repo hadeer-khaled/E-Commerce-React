@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 const schema = yup.object().shape({
-  name: yup
+  username: yup
     .string()
     .required("The name is required")
     .max(50, "The name must be at most 50 characters"),

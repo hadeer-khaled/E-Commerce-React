@@ -1,6 +1,6 @@
 import Select from "react-select";
 
-export default function Create({ formik, roles }) {
+export default function Create({ formik, roles , isSubmitting}) {
   return (
     <>
       <form onSubmit={formik.handleSubmit}>
@@ -16,15 +16,15 @@ export default function Create({ formik, roles }) {
           <input
             type="text"
             className="grow"
-            name="name"
+            name="username"
             placeholder="Username"
-            value={formik.values.name}
+            value={formik.values.username}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
         </label>
 
-        {formik.errors.name && formik.touched.name ? (
+        {formik.errors.username && formik.touched.username ? (
           <p className="text-red-500">{formik.errors.name}</p>
         ) : (
           ""
@@ -136,7 +136,7 @@ export default function Create({ formik, roles }) {
         <div className="flex justify-center items-baseline">
           <button
             type="submit"
-            disabled={!formik.isValid}
+            disabled={isSubmitting || !formik.isValid}
             className="btn btn-outline btn-info  mt-4 mr-2"
           >
             Add User

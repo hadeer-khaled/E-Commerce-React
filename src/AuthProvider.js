@@ -67,9 +67,9 @@ const AuthProvider = ({ children }) => {
         return;
       })
       .catch((error) => {
-        if (error.response.status == 401) {
+        // if (error.response.status == 401) {
           toast.error(error.response.data.message, { autoClose: 2000 });
-        }
+        // }
       });
   };
 

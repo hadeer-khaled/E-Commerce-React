@@ -19,20 +19,7 @@ export default function Register() {
     validationSchema: RegisterSchema,
 
     onSubmit: (values, actions) => {
-      const formData = new FormData();
-      formData.append("name", values.name);
-      formData.append("email", values.email);
-      formData.append("password", values.password);
-      formData.append("password_confirmation", values.password_confirmation);
-      register(formData)
-        .then((response) => {
-          toast.success(response.data.message, { autoClose: 2000 });
-          auth.loginAction(formData);
-        })
-        .catch((error) => {
-          toast.error(error.response.data.message, { autoClose: 2000 });
-          actions.setErrors(error);
-        });
+      auth.registerAction(values);
     },
   });
   return (

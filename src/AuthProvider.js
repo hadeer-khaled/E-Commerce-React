@@ -1,6 +1,6 @@
 import { useContext, createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { login, logout } from "api/auth";
+import { login, logout, register } from "api/auth";
 import { toast } from "react-toastify";
 
 const AuthContext = createContext();
@@ -13,10 +13,10 @@ const AuthProvider = ({ children }) => {
   });
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   const navigate = useNavigate();
+
   const loginAction = (data) => {
     login(data)
       .then((res) => {
-        // console.log("Headers with skipToken:", res.config.headers);
         setUser(res.data.data);
         setToken(res.data.data.access_token);
         localStorage.setItem("user", JSON.stringify(res.data.data));
@@ -53,8 +53,30 @@ const AuthProvider = ({ children }) => {
       });
   };
 
+  const registerAction = (data) => {
+    register(data)
+      .then((res) => {
+        setUser(res.data.data);
+        setToken(res.data.data.access_token);
+        localStorage.setItem("user", JSON.stringify(res.data.data));
+        localStorage.setItem("token", res.data.data.access_token);
+        toast.success(res.data.message, { autoClose: 1500 });
+        setTimeout(() => {
+          navigate("/");
+        }, 1500);
+        return;
+      })
+      .catch((error) => {
+        if (error.response.status == 401) {
+          toast.error(error.response.data.message, { autoClose: 2000 });
+        }
+      });
+  };
+
   return (
-    <AuthContext.Provider value={{ user, token, loginAction, logoutAction }}>
+    <AuthContext.Provider
+      value={{ user, token, loginAction, logoutAction, registerAction }}
+    >
       {children}
     </AuthContext.Provider>
   );

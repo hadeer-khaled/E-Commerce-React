@@ -27,7 +27,7 @@ export default function Create() {
         );
       })
       .catch((error) => {
-        toast.error("Error fetching roles:" , 1500);
+        toast.error("Error fetching roles:", 1500);
       });
   }, []);
 
@@ -40,7 +40,7 @@ export default function Create() {
       roles: [],
     },
 
-    validationSchema: createUserSchema,
+    // validationSchema: createUserSchema,
     onSubmit: (values, actions) => {
       setIsSubmitting(true);
 
@@ -53,7 +53,9 @@ export default function Create() {
           }, 1500);
         })
         .catch((error) => {
-          toast.error(error.response.data.message, { autoClose: 1500 });
+          for (const [, value] of Object.entries(error.response.data.errors)) {
+            toast.error(`${value}`, { autoClose: false });
+          }
           actions.setErrors(error);
         });
     },

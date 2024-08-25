@@ -153,13 +153,13 @@ export default function Update() {
     }
   };
 
-  const handleDownloadImages = () => {
-    // imagePreview?.map((image, index) => {
-    //   saveAs(image, `image_${index}`);
-    // });
-  };
   const handleDownloadEachImage = (index) => {
-    // saveAs(images[index], `image_${index}`);
+    fetch(images[index].url, { mode: "no-cors" })
+      .then((response) => response.blob())
+      .then((blob) => {
+        saveAs(blob, images[index].original_filename);
+      })
+      .catch((error) => console.error("Download failed", error));
   };
 
   return (
@@ -170,7 +170,6 @@ export default function Update() {
           images={images}
           imageRef={imageRef}
           handleDownloadEachImage={handleDownloadEachImage}
-          handleDownloadImages={handleDownloadImages}
           handleDeleteImages={handleDeleteImages}
         ></StoreImages>
         <UpdateProductForm formik={formik} categories={categories} />

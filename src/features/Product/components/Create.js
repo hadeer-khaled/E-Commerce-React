@@ -97,16 +97,15 @@ export default function Create() {
     }
   };
 
-  const handleDownloadImages = () => {
-    // images?.map((image) => {
-    //   saveAs(image.url, `${image.url}`);
-    // });
-  };
-
   const handleDownloadEachImage = (index) => {
-    saveAs(images[index].url, `${images[index].original_filename}`);
+    fetch(images[index].url, { mode: 'no-cors' })
+      .then(response => response.blob())
+      .then(blob => {
+        saveAs(blob, images[index].original_filename);
+      })
+      .catch(error => console.error('Download failed', error));
   };
-
+  
   return (
     <>
       <div className="card bg-base-100  shadow-xl p-4">
@@ -117,7 +116,6 @@ export default function Create() {
             images={images}
             imageRef={imageRef}
             handleDownloadEachImage={handleDownloadEachImage}
-            handleDownloadImages={handleDownloadImages}
             handleDeleteImages={handleDeleteImages}
           ></StoreImages>
           <CreateProductForm formik={formik} categories={categories} />

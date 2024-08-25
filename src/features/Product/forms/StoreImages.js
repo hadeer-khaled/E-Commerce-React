@@ -4,7 +4,6 @@ export default function StoreImages({
   handleImageChange,
   images,
   imageRef,
-  handleDownloadImages,
   handleDownloadEachImage,
   handleDeleteImages,
 }) {
@@ -83,13 +82,6 @@ export default function StoreImages({
               onClick={handleDeleteImages}
             >
               Delete all Images
-            </button>
-            <button
-              type="button"
-              className="btn"
-              onClick={handleDownloadImages}
-            >
-              Download all Images
             </button>
           </div>
         </div>

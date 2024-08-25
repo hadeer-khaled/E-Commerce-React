@@ -23,15 +23,7 @@ export default function Create() {
 
     validationSchema: createUserSchema,
     onSubmit: (values, actions) => {
-      console.log(values);
-      const UserData = {
-        name: values.name,
-        email: values.email,
-        password: values.password,
-        password_confirmation: values.password_confirmation,
-        roles: values.roles,
-      };
-      createUser(UserData)
+      createUser(values)
         .then((response) => {
           toast.success(response.data.message, { autoClose: 1500 });
           setTimeout(() => {

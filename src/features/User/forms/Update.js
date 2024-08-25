@@ -16,15 +16,15 @@ export default function Create({ formik, roles }) {
           <input
             type="text"
             className="grow"
-            name="name"
+            name="username"
             placeholder="Username"
-            value={formik.values.name}
+            value={formik.values.username}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
         </label>
 
-        {formik.errors.name && formik.touched.name ? (
+        {formik.errors.username && formik.touched.username ? (
           <p className="text-red-500">{formik.errors.name}</p>
         ) : (
           ""

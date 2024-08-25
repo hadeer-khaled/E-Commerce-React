@@ -18,7 +18,7 @@ export default function Create() {
 
   const formik = useFormik({
     initialValues: {
-      name: "",
+      username: "",
       email: "",
       roles: [],
     },
@@ -26,11 +26,10 @@ export default function Create() {
     validationSchema: UpdateUserSchema,
     onSubmit: (values, actions) => {
       const userData = {
-        name: values.name,
+        name: values.username,
         email: values.email,
         roles: values.roles.map((role) => role.value),
       };
-      console.log(userData);
       updateUserById(id, userData)
         .then((response) => {
           toast.success(response.data.message, { autoClose: 1500 });
@@ -48,7 +47,7 @@ export default function Create() {
   useEffect(() => {
     getUserById(id)
       .then((response) => {
-        formik.setFieldValue("name", response.data.data.name);
+        formik.setFieldValue("username", response.data.data.name);
         formik.setFieldValue("email", response.data.data.email);
         formik.setFieldValue(
           "roles",

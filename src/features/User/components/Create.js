@@ -24,16 +24,9 @@ export default function Create() {
 
     validationSchema: createUserSchema,
     onSubmit: (values, actions) => {
-      const userData = {
-        name: values.username,
-        email: values.email,
-        password: values.password,
-        password_confirmation: values.password_confirmation,
-        roles: values.roles,
-      };
       setIsSubmitting(true);
 
-      createUser(userData)
+      createUser({ ...values, name: values.username })
         .then((response) => {
           toast.success(response.data.message, { autoClose: 1500 });
 

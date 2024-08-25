@@ -5,11 +5,12 @@ import { useFormik } from "formik";
 import { getUserById, updateUserById } from "api/user";
 import UserUpdateForm from "features/User/forms/Update";
 import UpdateUserSchema from "features/User/schemas/Update";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Create() {
   const navigate = useNavigate();
   const { id } = useParams();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const roles = [
     { value: "user", label: "User" },
@@ -30,6 +31,8 @@ export default function Create() {
         email: values.email,
         roles: values.roles.map((role) => role.value),
       };
+      setIsSubmitting(true);
+
       updateUserById(id, userData)
         .then((response) => {
           toast.success(response.data.message, { autoClose: 1500 });
@@ -67,7 +70,11 @@ export default function Create() {
       <div className="card card-compact bg-base-100 w-96 shadow-xl mt-10">
         <div className="card-body">
           <h2 className="card-title">Update User</h2>
-          <UserUpdateForm formik={formik} roles={roles}></UserUpdateForm>
+          <UserUpdateForm
+            formik={formik}
+            roles={roles}
+            isSubmitting={isSubmitting}
+          ></UserUpdateForm>
         </div>
       </div>
     </>

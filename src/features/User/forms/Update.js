@@ -1,6 +1,6 @@
 import Select from "react-select";
 
-export default function Create({ formik, roles }) {
+export default function Create({ formik, roles, isSubmitting }) {
   return (
     <>
       <form onSubmit={formik.handleSubmit}>
@@ -73,7 +73,7 @@ export default function Create({ formik, roles }) {
         <div className="flex justify-center items-baseline">
           <button
             type="submit"
-            disabled={!formik.isValid}
+            disabled={isSubmitting || !formik.isValid}
             className="btn btn-outline btn-info  mt-4 mr-2"
           >
             Update User

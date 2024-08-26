@@ -1,7 +1,7 @@
 import axios_instance from "./config";
 
 export const getProducts = (params = {}) => {
-  console.log("params",params);
+  console.log("params", params);
   return axios_instance.get(`products`, {
     params: params,
   });
@@ -14,11 +14,19 @@ export const createProduct = (data) => {
   return axios_instance.post(`products`, data);
 };
 export const updateProductById = (product_id, data) => {
-  return axios_instance.put(`products/${product_id}`, data );
+  return axios_instance.put(`products/${product_id}`, data);
 };
 
 export const deleteProductById = (product_id) => {
   return axios_instance.delete(`products/${product_id}`);
+};
+
+export const deleteImages = (imagePaths) => {
+  return axios_instance.delete("products/delete-images", {
+    data: {
+      images: imagePaths,
+    },
+  });
 };
 
 export const storeImages = (images) => {

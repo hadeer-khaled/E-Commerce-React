@@ -21,6 +21,27 @@ export default function Update() {
   const [images, setImages] = useState([]);
   const navigate = useNavigate();
 
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      price: "",
+      description: "",
+      category_id: "",
+    },
+    validationSchema: CreateProductSchema,
+    onSubmit: (values) => {
+      updateProductById(id, prepareUpdatedProductData(values))
+        .then((response) => {
+          toast.success(response.data.message, { autoClose: 1500 });
+          setTimeout(() => {
+            navigate("/products");
+          }, 1500);
+        })
+        .catch((error) => {
+          console.error("Error creating product:", error);
+        });
+    },
+  });
   useEffect(() => {
     getCategoies()
       .then((response) => {
@@ -49,27 +70,6 @@ export default function Update() {
       });
   }, [id]);
 
-  const formik = useFormik({
-    initialValues: {
-      title: "",
-      price: "",
-      description: "",
-      category_id: "",
-    },
-    validationSchema: CreateProductSchema,
-    onSubmit: (values) => {
-      updateProductById(id, prepareUpdatedProductData(values))
-        .then((response) => {
-          toast.success(response.data.message, { autoClose: 1500 });
-          setTimeout(() => {
-            navigate("/products");
-          }, 1500);
-        })
-        .catch((error) => {
-          console.error("Error creating product:", error);
-        });
-    },
-  });
   const prepareUpdatedProductData = (values) => {
     const deletedImages = [];
     const createdImages = [];

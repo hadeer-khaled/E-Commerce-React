@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import CreateProductForm from "features/Product/forms/Create";
 
 import { getCategoies } from "api/category";
-import { createProduct, storeImages } from "api/product";
+import { createProduct, storeImages, deleteImages } from "api/product";
 import CreateProductSchema from "features/Product/schemas/Create";
 import StoreImages from "features/Product/forms/StoreImages";
 
@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 import { saveAs } from "file-saver";
+import "App.css";
 export default function Create() {
   const imageRef = useRef(null);
   const [categories, setCategories] = useState([]);
@@ -69,6 +70,7 @@ export default function Create() {
     storeImages(ImagesFormData)
       .then((res) => {
         setImages(res.data.images);
+        console.log(res.data.images);
         toast.success(res.data.message, { autoClose: 2000 });
       })
       .catch((err) => {
@@ -82,11 +84,13 @@ export default function Create() {
   };
   const handleDeleteImages = (e, index) => {
     if (index === null || index === undefined) {
+      deleteImages(images.map((image) => image.storage_filename));
       setImages([]);
       if (imageRef.current) {
         imageRef.current.value = "";
       }
     } else {
+      deleteImages([images[index].storage_filename]);
       const updatedImage = [...images];
       updatedImage.splice(index, 1);
       setImages(updatedImage);
@@ -97,15 +101,32 @@ export default function Create() {
     }
   };
 
-  const handleDownloadEachImage = (index) => {
-    fetch(images[index].url, { mode: 'no-cors' })
-      .then(response => response.blob())
-      .then(blob => {
-        saveAs(blob, images[index].original_filename);
+  // const handleDownloadEachImage = (index) => {
+  //   fetch(images[index].url, { mode: "no-cors" })
+  //     .then((response) => response.blob())
+  //     .then((blob) => {
+  //       console.log(blob);
+  //       saveAs(blob, images[index].original_filename);
+  //     })
+  //     .catch((error) => console.error("Download failed", error));
+  // };
+  const handleDownloadEachImage = async (fileurl, filename) => {
+    fetch(fileurl, { mode: "no-cors" })
+      .then((res) => {
+        return res.blob();
       })
-      .catch(error => console.error('Download failed', error));
+      .then((blob) => {
+        const href = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = href;
+        link.setAttribute("download", filename);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      })
+      .catch((err) => console.error(err));
   };
-  
+
   return (
     <>
       <div className="card bg-base-100  shadow-xl p-4">

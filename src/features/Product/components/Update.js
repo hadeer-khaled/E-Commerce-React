@@ -148,8 +148,24 @@ export default function Update() {
       });
     }
 
-    if (images.length === 0 && imageRef.current) {
-      imageRef.current.value = "";
+    // if (images.length === 0 && imageRef.current) {
+    //   imageRef.current.value = "";
+    // }
+    if (imageRef.current) {
+      let newImages = updatedImages.filter((image) => !image.id);
+      if (newImages.length > 0) {
+        const dataTransfer = new DataTransfer();
+
+        newImages.forEach((image) => {
+          const file = new File([image], image.original_filename);
+          console.log(file);
+          dataTransfer.items.add(file);
+        });
+
+        imageRef.current.files = dataTransfer.files;
+      } else {
+        imageRef.current.value = "";
+      }
     }
   };
 

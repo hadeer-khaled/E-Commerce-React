@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 const Navbar = () => {
   const navigate = useNavigate();
   const auth = useAuth();
+  console.log("in navbar", auth.isLoggingOut);
 
   return (
     <div className="navbar bg-gray-800 text-white mb-6">
@@ -43,8 +44,9 @@ const Navbar = () => {
           <>
             <p> {auth.user.name}</p>
             <button
-              className="px-3 py-2 rounded-md text-sm font-medium bg-red-600 hover:bg-red-700"
+              className="btn btn-error"
               onClick={auth.logoutAction}
+              disabled={auth.isLoggingOut}
             >
               Logout
             </button>

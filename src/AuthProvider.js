@@ -7,6 +7,9 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   //   const [user, setUser] = useState(localllStorage.getItem("user") || null);
+
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
   const [user, setUser] = useState(() => {
     const savedUser = localStorage.getItem("user");
     return savedUser ? JSON.parse(savedUser) : null;
@@ -32,6 +35,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const logoutAction = () => {
+    setIsLoggingOut(true);
     logout({
       headers: {
         Authorization: `Bearer ${token}`,
@@ -43,6 +47,7 @@ const AuthProvider = ({ children }) => {
         setToken("");
         localStorage.removeItem("token");
         localStorage.removeItem("user");
+        setIsLoggingOut(false);
         navigate("/login");
       })
       .catch((error) => {
@@ -53,7 +58,7 @@ const AuthProvider = ({ children }) => {
       });
   };
 
-  const registerAction = (data , setIsSubmitting) => {
+  const registerAction = (data, setIsSubmitting) => {
     register(data)
       .then((res) => {
         setUser(res.data.data);
@@ -67,14 +72,21 @@ const AuthProvider = ({ children }) => {
         return;
       })
       .catch((error) => {
-          toast.error(error.response.data.message, { autoClose: 2000 });
-          setIsSubmitting(false)
+        toast.error(error.response.data.message, { autoClose: 2000 });
+        setIsSubmitting(false);
       });
   };
 
   return (
     <AuthContext.Provider
-      value={{ user, token, loginAction, logoutAction, registerAction }}
+      value={{
+        user,
+        token,
+        loginAction,
+        logoutAction,
+        registerAction,
+        isLoggingOut,
+      }}
     >
       {children}
     </AuthContext.Provider>

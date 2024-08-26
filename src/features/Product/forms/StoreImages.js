@@ -17,6 +17,7 @@ export default function StoreImages({
           <div className="flex items-center space-x-4">
             <input
               type="file"
+              id="images"
               name="images"
               accept="image/*"
               ref={imageRef}
@@ -24,6 +25,21 @@ export default function StoreImages({
               onChange={handleImageChange}
               className={`shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
             />
+
+            {/* <input
+              type="file"
+              id="images"
+              name="images"
+              accept="image/*"
+              ref={imageRef}
+              multiple
+              onChange={handleImageChange}
+              style={{ display: "none" }}
+              className={`shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
+            />
+            <label for="images" class="custom-file-upload">
+              Choose Files
+            </label> */}
 
             <div className="flex flex-wrap mt-4 space-x-4">
               {images?.map((image, index) => (
@@ -59,7 +75,11 @@ export default function StoreImages({
                         type="button"
                         className="btn btn-circle btn-sm absolute top-1 left-1 z-10"
                         onClick={() => {
-                          handleDownloadEachImage(index);
+                          handleDownloadEachImage(
+                            image?.url,
+                            image?.original_filename
+                          );
+                          // handleDownloadEachImage(index);
                         }}
                       >
                         <FaDownload />

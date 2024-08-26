@@ -70,7 +70,6 @@ export default function Create() {
     storeImages(ImagesFormData)
       .then((res) => {
         setImages(res.data.images);
-        console.log(res.data.images);
         toast.success(res.data.message, { autoClose: 2000 });
       })
       .catch((err) => {
@@ -95,8 +94,20 @@ export default function Create() {
       updatedImage.splice(index, 1);
       setImages(updatedImage);
 
-      if (updatedImage.length === 0 && imageRef.current) {
-        imageRef.current.value = "";
+      if (imageRef.current) {
+        if (updatedImage.length > 0) {
+          const dataTransfer = new DataTransfer();
+
+          updatedImage.forEach((image) => {
+            const file = new File([image], image.original_filename);
+            console.log(file);
+            dataTransfer.items.add(file);
+          });
+
+          imageRef.current.files = dataTransfer.files;
+        } else {
+          imageRef.current.value = "";
+        }
       }
     }
   };

@@ -8,6 +8,7 @@ import { NavLink } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "AuthProvider";
+import ExcelExport from "components/Excel/ExcelExport";
 
 const List = () => {
   const auth = useAuth();
@@ -90,6 +91,10 @@ const List = () => {
               Add a new Category
             </NavLink>
           )}
+          <ExcelExport
+            data={categoriesList}
+            fileName="categories"
+          ></ExcelExport>
         </div>
 
         <div className="px-4 grid grid-cols-4 gap-4">

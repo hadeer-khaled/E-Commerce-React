@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { getCategoies, deleteCategoryById } from "api/category";
+import {
+  getCategoies,
+  deleteCategoryById,
+  exportCategories,
+} from "api/category";
 import Paginator from "components/Paginator/Paginator";
 import CategoryCard from "features/Category/components/Card";
 import Filter from "components/Filter/Filter";
@@ -95,6 +99,15 @@ const List = () => {
             data={categoriesList}
             fileName="categories"
           ></ExcelExport>
+
+          <button
+            className="btn btn-success"
+            onClick={() => {
+              exportCategories({ title: filter?.toLowerCase() });
+            }}
+          >
+            Export Categories form Backend
+          </button>
         </div>
 
         <div className="px-4 grid grid-cols-4 gap-4">

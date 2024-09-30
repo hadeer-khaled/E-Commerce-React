@@ -3,6 +3,7 @@ import {
   getCategoies,
   deleteCategoryById,
   exportCategories,
+  exportCategoriesQueue,
 } from "api/category";
 import Paginator from "components/Paginator/Paginator";
 import CategoryCard from "features/Category/components/Card";
@@ -103,7 +104,8 @@ const List = () => {
           <button
             className="btn btn-success"
             onClick={() => {
-              exportCategories({ title: filter?.toLowerCase() });
+              // exportCategories({ title: filter?.toLowerCase() });
+              exportCategoriesQueue({ title: filter?.toLowerCase() }).then((res)=>{console.log(res.data?.message)})
             }}
           >
             Export Categories form Backend

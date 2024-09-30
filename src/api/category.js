@@ -70,3 +70,8 @@ export const exportCategories = (params = {}) => {
       alert("Failed to export categories");
     });
 };
+export const exportCategoriesQueue = (params = {}) => {
+  return axios_instance.get("categories/export", {
+    params: params,
+  });
+};

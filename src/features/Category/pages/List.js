@@ -105,7 +105,11 @@ const List = () => {
             className="btn btn-success"
             onClick={() => {
               // exportCategories({ title: filter?.toLowerCase() });
-              exportCategoriesQueue({ title: filter?.toLowerCase() }).then((res)=>{console.log(res.data?.message)})
+              exportCategoriesQueue(18, { title: filter?.toLowerCase() }).then(
+                (res) => {
+                  console.log(res.data?.message);
+                }
+              );
             }}
           >
             Export Categories form Backend

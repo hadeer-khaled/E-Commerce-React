@@ -70,8 +70,11 @@ export const exportCategories = (params = {}) => {
       alert("Failed to export categories");
     });
 };
-export const exportCategoriesQueue = (params = {}) => {
+export const exportCategoriesQueue = (user_id, params = {}) => {
   return axios_instance.get("categories/export", {
-    params: params,
+    params: {
+      ...params,
+      user_id: user_id,
+    },
   });
 };
